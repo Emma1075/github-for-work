@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>select-multiple e</title>
+
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="select-multiple.css">
+
+  <style>
+    body {
+      padding-top: 70px;
+      display:block!important;
+    }
+  </style>
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="select-multiple.js"></script>
+</head>
+<body>
+        <div class="form-group">
+          <select class="selectpicker" multiple fillDivId="la123a" data-live-search="false" data-live-search-placeholder="搜索" data-actions-box="true">
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="selectpicker" multiple fillDivId="la123b" data-live-search="true" data-live-search-placeholder="搜索" data-actions-box="true">
+              <option>北京1</option>
+              <option>上海2</option>
+              <option>北京3</option>
+              <option>北京4</option>
+              <option>北京1</option>
+              <option>北京2</option>
+              <option>北京3</option>
+              <option>北京4</option>
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+          </select>
+        </div>
+      <div id="la123a" >
+        1
+
+      </div>
+      <div id="la123b" >
+        2
+
+      </div>
+    
+
+<script>
+  $(document).ready(function () {
+    var mySelect = $('.selectpicker');
+  });
+</script>
+</body>
+</html>

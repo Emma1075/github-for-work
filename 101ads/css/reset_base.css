@@ -1,0 +1,47 @@
+
+@charset "utf-8";
+/*-------------------------------------------reset------------------------------------------------*/
+
+a {text-decoration:none; color:#666;}
+a:hover {text-decoration:underline;}
+
+fieldset,
+img {
+	border:0;
+}
+
+
+/*文字排版*/
+
+.f20{font-size:20px}
+
+/*
+	fl包含display inline  是为了解决ie6双边距  
+	如果.fl用在ul(可能还有别的标签)标签上会出现类似text-indent的bug  
+	可以通过给li标签浮动修正 或者覆盖掉此处的display属性
+*/
+.fl{float:left;display:inline;}
+
+/*
+	不加block在标准浏览器中无法清除ie6、7可以但下面多一像素
+	height:0px;时ie6中无法清除(给浮动块margin可以看出)
+*/
+.clear{clear:both;overflow:hidden;display:block;height:0px;_height:1px; font:300 1px/1px arial;}
+/*
+	clearfix清除浮动后在ie6、7中会忽略浮动框的margin-bottom
+	并且偶尔会由于layout被激活而出现一些bug  如多出间隙等
+	此时可以使用.clear来避免这种bug 或者两者结合使用
+*/
+.clearfix:after{content:'.';display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{*zoom:1;}
+.clearfix .clear{_height:0px;}
+/*
+	一般情况下使用clearfix即可
+	出现忽略margin等情况是clearfix与clear一起使用
+	单独使用clear一般可以清除浮动，但ie6会多一个像素
+*/
+
+.w100{width:100px;}
+
+.w200{width:200px;}
+

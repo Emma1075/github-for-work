@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]><html class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>分组报告</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=edge,Chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+
+
+<!-- DataTables -->
+<!-- <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.css"> -->
+
+<link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="plugins/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css"/>
+
+<link href="plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css"/>
+<link href="plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+
+<link href="plugins/mCustomScrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css"/>
+
+<link href="plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+
+<link href="css/reset_base.css" rel="stylesheet" type="text/css"/>
+<link href="css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="css/layout.css" rel="stylesheet" type="text/css"/>
+<link href="css/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="css/custom.css" rel="stylesheet" type="text/css"/>
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->
+			<ul class="page-sidebar-menu" id="menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<li class="sidebar-toggler-wrapper">
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler"></div>
+					<!-- END SIDEBAR TOGGLER BUTTON -->
+				</li>
+				<li>
+					<a href="index.html">
+						<i class="icon-home"></i>
+						<span class="title">整体报告</span>
+					</a>
+				</li>
+				<li >
+					<a href="group.html">
+						<i class="icon-group"></i>
+						<span class="title">分组报告</span>
+					</a>
+				</li>
+				<li>
+					<a href="puton.html">
+						<i class="icon-leaf"></i>
+						<span class="title">投放报告</span>
+					</a>
+				</li>
+			</ul>
+			<!-- END SIDEBAR MENU -->
+		</div>
+	</div>
+	<!-- END SIDEBAR -->
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<!-- BEGIN PAGE HEADER-->
+			<div class="page-bar">
+				<div class="pageTitle">
+					分组报告
+				</div>
+				<ul class="page-breadcrumb">
+					<li>
+						<a href="index.html">整体报告</a> > 
+					</li>
+					<li>
+						<a href="#">分组报告</a>
+					</li>
+				</ul>
+				<div id="dataSelect">
+					<div class="fl">
+						<div class="input-group input-medium date-picker input-daterange" data-date="" data-date-format="yyyy-mm-dd">
+							<input name="dataBegin" class="form-control" type="text" value="">
+							<span class="input-group-addon">至</span>
+							<input name="dataEnd" class="form-control" type="text" value="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<div class="row">
+				<div class="col-xs-1 col-lg-12">
+					<ul id="report" class="nav nav-tabs">  
+						<li class="active"><a href="#advertising" data-toggle="tab">广告位报告</a></li>
+						<li><a href="#templet" data-toggle="tab">模板报告</a></li>
+						<li><a href="#column" data-toggle="tab">栏目报告</a></li>
+						<li><a href="#website" data-toggle="tab">站点报告</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="advertising" class="tab-pane fade in active">
+							<div class="row">
+								<div class="col-xs-1 col-lg-12">
+									<!-- Con -->
+									<div class="portlet-body">
+										<div class="portlet-body">
+											<div class="portlet">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="row">
+															<div class="col-md-2">
+																<div class="fl arr2"></div>
+																<div class="fl" style="width:80%">
+																	<div class="f20">点击量: <span></span></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="portlet" style="padding-top:0;">
+												<div class="portlet-body form">
+													<div class="panel-title clearfix" style="padding:5px 15px;">
+														<div class="row">
+															<div class="col-md-6">
+																<span class="arrow" data-toggle="collapse" data-target="#One">筛选</span>
+															</div>
+															<div class="col-md-6">
+																&nbsp;
+																<!-- <form id="search" action="#" method="post">
+																	<div class="input-group fr">
+																		<input type="text" class="form-control" placeholder="输入代码位名称或ID">
+																		<button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
+																	</div>
+																</form> -->
+															</div>
+														</div>
+													</div>
+													<!-- BEGIN FORM-->
+													<form id="adqueryterm" action="#" method="post">
+														<div class="form-horizontal collapse in" id="One">
+															<div class="form-body">
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">站点筛选</label>
+																			<div class="col-md-8">
+																				<select name="wsid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">模板筛选</label>
+																			<div class="col-md-8">
+																				<select name="tplid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">广告位筛选</label>
+																			<div class="col-md-8">
+																				<select name="apid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="form-group">
+																			<label class="col-md-1 control-label">栏目筛选</label>
+																			<div class="col-md-11">
+																				<div class="radio-list">
+																					<label class="radio-inline"><input type="checkbox" name="checkAll" value="" checked="checked">全选</label>
+																				</div>
+																				<div class="radio-list">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+															</div>
+														</div>
+														<div class="form-actions text-right">
+															<button type="submit" class="btn w100 blue">筛选</button>
+															<button type="button" class="btn w100 btn-default">导出CSV</button>
+														</div>
+													</form>
+													<!-- END FORM-->
+												</div>
+											</div>
+											<!-- 查询结果 TAB -->
+											<div class="portlet" style="padding-top:0;">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="tableX portletTable">
+															<table style="width:100%;" class="table table-bordered table-striped table-advance table-condensed flip-content text-center tableCedu">
+																<thead class="flip-content">
+																	<th class="numeric text-center"> 广告位id </th>
+																	<th class="numeric text-center"> 广告位名称 </th>
+																	<th class="numeric text-center"> 站点 </th>
+																	<th class="numeric text-center"> 模板 </th>
+																	<th class="numeric text-center"> 栏目 </th>
+																	<th class="numeric text-center"> 点击量 </th>
+																</thead>
+																<tbody></tbody>
+															</table>
+														</div>
+														<div class="page clearfix"></div>
+													</div>
+												</div>
+											</div>
+											<!-- END 查询结果 TAB -->
+										</div>
+									</div>
+									<!-- END Con -->
+								</div>
+							</div>
+						</div>
+						<div id="templet" class="tab-pane fade in">
+							<div class="row">
+								<div class="col-xs-1 col-lg-12">
+									<!-- Con -->
+									<div class="portlet-body">
+										<div class="portlet-body">
+											<div class="portlet">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="row">
+															<div class="col-md-2">
+																<div class="fl arr2"></div>
+																<div class="fl" style="width:80%">
+																	<div class="f20">点击量: <span></span></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="portlet" style="padding-top:0;">
+												<div class="portlet-body form">
+													<div class="panel-title clearfix" style="padding:5px 15px;">
+														<div class="row">
+															<div class="col-md-6">
+																<span class="arrow" data-toggle="collapse" data-target="#Two">筛选</span>
+															</div>
+															<div class="col-md-6">
+																&nbsp;
+																<!-- <form id="search" action="#" method="post">
+																	<div class="input-group fr">
+																		<input type="text" class="form-control" placeholder="输入代码位名称或ID">
+																		<button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
+																	</div>
+																</form> -->
+															</div>
+														</div>
+													</div>
+													<!-- BEGIN FORM-->
+													<form id="templetqueryterm" action="#" method="post">
+														<div class="form-horizontal collapse in" id="Two">
+															<div class="form-body">
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">站点筛选</label>
+																			<div class="col-md-8">
+																				<select name="wsid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">模板筛选</label>
+																			<div class="col-md-8">
+																				<select name="tplid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+															</div>
+														</div>
+														<div class="form-actions text-right">
+															<button type="submit" class="btn w100 blue">筛选</button>
+															<button type="button" class="btn w100 btn-default">导出CSV</button>
+														</div>
+													</form>
+													<!-- END FORM-->
+												</div>
+											</div>
+											<!-- 查询结果 TAB -->
+											<div class="portlet" style="padding-top:0;">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="tableX portletTable">
+															<table style="width:100%;" class="table table-bordered table-striped table-advance table-condensed flip-content text-center tableCedu">
+																<thead class="flip-content">
+																	<th class="numeric text-center"> 站点 </th>
+																	<th class="numeric text-center"> 模板 </th>
+																	<th class="numeric text-center"> 点击量 </th>
+																</thead>
+																<tbody></tbody>
+															</table>
+														</div>
+														<div class="page clearfix"></div>
+													</div>
+												</div>
+											</div>
+											<!-- END 查询结果 TAB -->
+										</div>
+									</div>
+									<!-- END Con -->
+								</div>
+							</div>
+						</div>
+						<div id="column" class="tab-pane fade in">
+							<div class="row">
+								<div class="col-xs-1 col-lg-12">
+									<!-- Con -->
+									<div class="portlet-body">
+										<div class="portlet-body">
+											<div class="portlet">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="row">
+															<div class="col-md-2">
+																<div class="fl arr2"></div>
+																<div class="fl" style="width:80%">
+																	<div class="f20">点击量: <span></span></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="portlet" style="padding-top:0;">
+												<div class="portlet-body form">
+													<div class="panel-title clearfix" style="padding:5px 15px;">
+														<div class="row">
+															<div class="col-md-6">
+																<span class="arrow" data-toggle="collapse" data-target="#Three">筛选</span>
+															</div>
+															<div class="col-md-6">
+																&nbsp;
+																<!-- <form id="search" action="#" method="post">
+																	<div class="input-group fr">
+																		<input type="text" class="form-control" placeholder="输入代码位名称或ID">
+																		<button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
+																	</div>
+																</form> -->
+															</div>
+														</div>
+													</div>
+													<!-- BEGIN FORM-->
+													<form id="columnqueryterm" action="#" method="post">
+														<div class="form-horizontal collapse in" id="Three">
+															<div class="form-body">
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">站点筛选</label>
+																			<div class="col-md-8">
+																				<select name="wsid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+																<div class="row">
+																	<div class="col-md-12">
+																		<div class="form-group">
+																			<label class="col-md-1 control-label">栏目筛选</label>
+																			<div class="col-md-11">
+																				<div class="radio-list">
+																					<label class="radio-inline"><input type="checkbox" name="checkAll" value="" checked="checked">全选</label>
+																				</div>
+																				<div class="radio-list">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+															</div>
+														</div>
+														<div class="form-actions text-right">
+															<button type="submit" class="btn w100 blue">筛选</button>
+															<button type="button" class="btn w100 btn-default">导出CSV</button>
+														</div>
+													</form>
+													<!-- END FORM-->
+												</div>
+											</div>
+											<!-- 查询结果 TAB -->
+											<div class="portlet" style="padding-top:0;">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="tableX portletTable">
+															<table style="width:100%;" class="table table-bordered table-striped table-advance table-condensed flip-content text-center tableCedu">
+																<thead class="flip-content">
+																	<th class="numeric text-center"> 站点 </th>
+																	<th class="numeric text-center"> 栏目 </th>
+																	<th class="numeric text-center"> 点击量 </th>
+																</thead>
+																<tbody></tbody>
+															</table>
+														</div>
+														<div class="page clearfix"></div>
+													</div>
+												</div>
+											</div>
+											<!-- END 查询结果 TAB -->
+										</div>
+									</div>
+									<!-- END Con -->
+								</div>
+							</div>
+						</div>
+						<div id="website" class="tab-pane fade in">
+							<div class="row">
+								<div class="col-xs-1 col-lg-12">
+									<!-- Con -->
+									<div class="portlet-body">
+										<div class="portlet-body">
+											<div class="portlet">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="row">
+															<div class="col-md-2">
+																<div class="fl arr2"></div>
+																<div class="fl" style="width:80%">
+																	<div class="f20">点击量: <span></span></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="portlet" style="padding-top:0;">
+												<div class="portlet-body form">
+													<div class="panel-title clearfix" style="padding:5px 15px;">
+														<div class="row">
+															<div class="col-md-6">
+																<span class="arrow" data-toggle="collapse" data-target="#Four">筛选</span>
+															</div>
+															<div class="col-md-6">
+																&nbsp;
+																<!-- <form id="search" action="#" method="post">
+																	<div class="input-group fr">
+																		<input type="text" class="form-control" placeholder="输入代码位名称或ID">
+																		<button class="btn btn-default glyphicon glyphicon-search" type="submit"></button>
+																	</div>
+																</form> -->
+															</div>
+														</div>
+													</div>
+													<!-- BEGIN FORM-->
+													<form id="websitequeryterm" action="#" method="post">
+														<div class="form-horizontal collapse in" id="Four">
+															<div class="form-body">
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="col-md-4 control-label">站点筛选</label>
+																			<div class="col-md-8">
+																				<select name="wsid" class="form-control select-default w200">
+																				</select>
+																			</div>
+																		</div>
+																	</div>
+																	<!--/span-->
+																</div>
+																<!--/row-->
+															</div>
+														</div>
+														<div class="form-actions text-right">
+															<button type="submit" class="btn w100 blue">筛选</button>
+															<button type="button" class="btn w100 btn-default">导出CSV</button>
+														</div>
+													</form>
+													<!-- END FORM-->
+												</div>
+											</div>
+											<!-- 查询结果 TAB -->
+											<div class="portlet" style="padding-top:0;">
+												<div class="tabbable-line">
+													<div class="portlet-body">
+														<div class="tableX portletTable">
+															<table style="width:100%;" class="table table-bordered table-striped table-advance table-condensed flip-content text-center tableCedu">
+																<thead class="flip-content">
+																	<th class="numeric text-center"> 站点 </th>
+																	<th class="numeric text-center"> 点击量 </th>
+																</thead>
+																<tbody></tbody>
+															</table>
+														</div>
+														<div class="page clearfix"></div>
+													</div>
+												</div>
+											</div>
+											<!-- END 查询结果 TAB -->
+										</div>
+									</div>
+									<!-- END Con -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+
+<div id="ViewDate" class="modal fade" tabindex="-1" data-width="1000">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		<h4 class="modal-title">查看日期明细</h4>
+	</div>
+	<div id="viewdate" class="modal-body" style="height:480px;"></div>
+	<div class="modal-footer">
+		<button type="button" data-dismiss="modal" class="btn w100 blue">关 闭</button>
+	</div>
+</div>
+
+<!--[if lt IE 9]>
+<script src="plugins/respond.min.js"></script>
+<script src="plugins/excanvas.min.js"></script> 
+<![endif]-->
+<script src="plugins/jquery.min.js" type="text/javascript"></script>
+<script src="plugins/jquery-migrate.min.js" type="text/javascript"></script>
+<script src="plugins/jquery.mousewheel.js" type="text/javascript"></script>
+
+<script src="plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="plugins/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+
+<script src="plugins/jquery-chosen/js/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="plugins/select-multiple/select-multiple.js" type="text/javascript"></script>
+
+<script src="plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js" type="text/javascript"></script>
+
+<script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="scripts/components-pickers.js" type="text/javascript"></script>
+
+<script src="plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>
+<script src="plugins/bootstrap-modal/js/bootstrap-modal.js" type="text/javascript"></script>
+
+<script src="plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+
+<script src="scripts/metronic.js" type="text/javascript"></script>
+<script src="scripts/layout.js" type="text/javascript"></script>
+
+<script src="plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+<script src="plugins/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script src="js/jstemplate.js" type="text/javascript"></script>
+<script src="js/createform.js" type="text/javascript"></script>
+<script src="js/createtable.js" type="text/javascript"></script>
+<script src="js/base.js" type="text/javascript"></script>
+
+<script>
+var loadingFlag=0;
+
+jQuery(document).ready(function() {
+	Layout.init();
+	ComponentsPickers.init();
+
+	var now=new Date(),
+		beginData=new Date(now-7*24*60*60*1000);
+	$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
+	$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
+	$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
+	$(".date-picker").datepicker({
+		rtl: Metronic.isRTL(),
+		orientation: "right",
+		autoclose: true
+	});
+
+	// 参数配置
+	var queryTable = {
+		advertising: {
+			formId:"adqueryterm",
+			tableId:"advertising",
+			method:"adver.adv?method=queryPositionReport",
+			columns:"apid;apname;site;tpl_name;topcname;hitnum"
+		},
+		templet: {
+			formId:"templetqueryterm",
+			tableId:"templet",
+			method:"adver.adv?method=queryTemplateReport",
+			columns:"site;tpl_name;hitnum"
+		},
+		column:{
+			formId:"columnqueryterm",
+			tableId:"column",
+			method:"adver.adv?method=queryCategoryReport",
+			columns:"site;topcname;hitnum"
+		},
+		website:{
+			formId:"websitequeryterm",
+			tableId:"website",
+			method:"adver.adv?method=queryPlatformReport",
+			columns:"site;hitnum"
+		}
+	};
+
+	var queryForm = {
+		advertising: {
+			queryterm: "wsid_tplid_apid_cid",
+			tableQuery: queryTable.advertising,
+		},
+		templet: {
+			queryterm:"wsid_tplid",
+			tableQuery:queryTable.templet
+		},
+		column:{
+			queryterm:"wsid_cid",
+			tableQuery:queryTable.column
+		},
+		website:{
+			queryterm:"wsid",
+			tableQuery:queryTable.website
+		}
+
+	};
+
+	var queryNum = {
+		advertising: {
+			formId: "adqueryterm",
+			tableId: "advertising",
+			method: "adver.adv?method=queryPositionReportGroupDay",
+			params:[ "apid", "apname", "site", "tpl_name", "topcname"],
+			columns: "apid;apname;site;tpl_name;topcname;day;hitnum"
+		},
+		templet: {
+			formId: "templetqueryterm",
+			tableId: "templet",
+			method: "adver.adv?method=queryTemplateReportGroupDay",
+			params:[ "site", "tpl_name"],
+			columns: "site;tpl_name;day;hitnum"
+		},
+		column: {
+			formId: "columnqueryterm",
+			tableId: "column",
+			method: "adver.adv?method=queryCategoryReportGroupDay",
+			params:["site","topcname"],
+			columns: "site;topcname;day;hitnum"
+		},
+		website: {
+			formId: "websitequeryterm",
+			tableId: "website",
+			method: "adver.adv?method=queryPlatformReportGroupDay",
+			params:["site"],
+			columns: "site;day;hitnum"
+		}
+	};
+
+	var initParam = {
+		formID: ["adqueryterm", "templetqueryterm", "columnqueryterm", "websitequeryterm"],
+		tableID: ["advertising", "templet", "column", "website"]
+	}
+
+	showLoading(1);
+	createform(queryForm.advertising,createtable);
+
+	// 点击导航栏中项目时，请求该项目数据并显示表格
+
+	$("[href='#advertising']").click(function() {
+		showLoading(1);
+		createform(queryForm.advertising,createtable);
+	})
+
+	$("[href='#templet']").click(function() {
+		showLoading(1);
+		createform(queryForm.templet,createtable);
+	})
+
+	
+	$("[href='#column']").click(function(){
+		showLoading(1);
+		createform(queryForm.column,createtable);
+	})
+
+	$("[href='#website']").click(function(){
+		showLoading(1);
+		createform(queryForm.website,createtable);
+	})
+	
+
+	$("#advertising select[name='tplid']").change(function() {
+		createAdspace($(this).val(),"advertising");
+	});
+
+	// 筛选功能 参见 base.js 中 filterTable()函数
+	// filterTable("adqueryterm",queryTable.advertising);
+	// filterTable("templetqueryterm",queryTable.templet);
+	// filterTable("columnqueryterm",queryTable.column);
+	// filterTable("websitequeryterm",queryTable.website);	
+
+	// 导出功能 参见 base.js 中 exportCSV()函数
+	// exportCSV("adqueryterm",queryTable.advertising);
+	// exportCSV("templetqueryterm",queryTable.templet);
+	// exportCSV("columnqueryterm",queryTable.column);
+	// exportCSV("websitequeryterm",queryTable.website);
+
+	// 点击表格中“点击量”，弹出模态框显示详情。 参加 base.js 中 clickModal() 函数 
+	// clickModal("advertising",queryNum.advertising);
+	// clickModal("templet",queryNum.templet);
+	// clickModal("column",queryNum.column);
+	// clickModal("website",queryNum.website);
+
+	initLoop(initParam.formID, queryTable, true, exportCSV);
+	initLoop(initParam.formID, queryTable, true, filterTable);
+	initLoop(initParam.tableID, queryNum, false, clickModal);
+	// 隐藏模态框
+	$("#ViewDate").on("hidden.bs.modal", function() {
+		$(this).removeData("bs.modal");
+	});
+
+	function initLoop(eleArr, oParams, isForm, fn) {
+		var tempArr = [
+			{"adqueryterm": "advertising"},
+			{"templetqueryterm": "templet"},
+			{"columnqueryterm": "column"},
+			{"websitequeryterm": "website"},
+		]
+		eleArr.forEach(function(ele,index) {
+			if (isForm) {
+				var opt = tempArr[index][ele];
+				fn(ele,oParams[opt]);
+			} else {
+				fn(ele,oParams[ele])
+			}
+		})
+	}
+
+});
+</script>
+
+<script src="scripts/base.js" type="text/javascript"></script>
+</body>
+</html>

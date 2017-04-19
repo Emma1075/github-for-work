@@ -7,3 +7,8 @@
 .materiel-img {
 	width: 200px;
 }
+
+#viewdate {
+	max-height: 480px;
+	overflow-y: auto;
+}

@@ -188,6 +188,8 @@
 																	<th class="numeric text-center"> 广告名称 </th>
 																	<th class="numeric text-center"> 广告id </th>
 																	<th class="numeric text-center"> 投放站点 </th>
+																	<th class="numeric text-center"> 一级栏目 </th>
+																	<th class="numeric text-center"> 二级栏目 </th>
 																	<th class="numeric text-center"> 点击量 </th>
 																</thead>
 																<tbody></tbody>
@@ -380,7 +382,7 @@ jQuery(document).ready(function() {
 			formId:"adqueryterm",
 			tableId:"advertise",
 			method:"adver.adv?method=queryAdvertiseReportL",
-			columns:"alname;alid;site;hitnum"
+			columns:"alname;alid;site;parent_name;cname;hitnum"
 		},
 		materiel: {
 			formId:"materielqueryterm",

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>teacher</title>
+  <link href="css/bootstrap-common.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="js/getRequest.js"></script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
+  </script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/jquery.min.js?v=170418'><\/script>"); 
+  </script>
+</head>
+
+<body>
+<div class="container-fluid">
+  <h3>教师人数情况</h3>
+  <div id="teacher" class="content">
+    <div class="top row">
+      <div class="inline-item col-lg-4 col-md-4 col-sm-4">
+        <div class="item-parent text-center">
+          <div class="item-child">
+            <p><span class="text-mute">辅导教师人数</span></p>
+            <p><span id="coach_num" class="text-number"></span><span class="mute"> 人</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="inline-item col-lg-4 col-md-4 col-sm-4">
+        <div class="item-parent text-center">
+          <div class="item-child">
+            <p><span class="text-mute">班主任人数</span></p>
+            <p><span id="classteacher_num" class="text-number"></span><span class="mute"> 人</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="inline-item col-lg-4 col-md-4 col-sm-4">
+        <div class="item-parent text-center">
+          <div class="item-child">
+            <p><span class="text-mute">论文教师人数</span></p>
+            <p><span id="theis_num" class="text-number"></span><span class="mute"> 人</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="middle">
+      <h4>数据分析</h4>
+      <div id="brokenLine">
+
+      </div>
+    </div>
+
+    <div class="bottom">
+      <h4>数据统计</h4>
+      <div id="table">
+        表格
+      </div>
+    </div>    
+  </div>
+</div>
+
+<script id="myTable" type="text/html">
+<table class="table table-bordered table-condensed text-center">
+  <tbody>
+    <tr class="text-center">
+      <th class="text-center">函授站</th>
+      <th class="text-center">辅导教师人数</th>
+      <th class="text-center">班主任人数</th>
+      <th class="text-center">论文老师人数</th>
+    </tr>
+    {{each pageMaplist as value i}}
+    <tr class="text-center">
+      <td class="text-center">{{value.StationName}}</td>
+      <td class="text-center">{{value.coachnum}}</td>
+      <td class="text-center">{{value.classteanum}}</td>
+      <td class="text-center">{{value.theisteanum}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</script>
+
+<!-- <script type="text/javascript" src="js/simulate-jquery-by-js.js"></script> -->
+
+<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
+<script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+  var tableHtml = '',
+      parameters = getParameters(),
+      thisUrl = getSite(),
+      itemSystem = {itemSystemIds:'2c9091fd58f5ddc20158f5ddc686000a;2c9091fd58f5ddc20158f5ddc686000c;2c9091fd58f5ddc20158f5ddc687000e'},
+      WithoutitemSystem = WithoutitemSystemIds(),
+      sumData = Object.assign(itemSystem,WithoutitemSystem);
+  // 分（详细）
+  $.ajax({
+    type: 'GET',
+    url: thisUrl,
+    data: parameters,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=9e2bf059250ba8255730ee9be4b3d3ea473f129c&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.teachernum&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5ddc20158f5ddc6850008%3B2c9091fd58f5ddc20158f5ddc686000a%3B2c9091fd58f5ddc20158f5ddc686000c%3B2c9091fd58f5ddc20158f5ddc687000e&color=',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data['pageMaplist'];
+      // artTemplate 渲染表格
+      getTable(data);
+
+      // 得到折线图
+      getBrokenLine(myData);
+    },
+    error: function(data) {
+      document.write(data.responseText);
+    }
+  })
+  
+  
+  // 总
+  $.ajax({
+    type: 'GET',
+    url: thisUrl,
+    data: sumData,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?itemSystemIds=2c9091fd58f5ddc20158f5ddc686000a%3B2c9091fd58f5ddc20158f5ddc686000c%3B2c9091fd58f5ddc20158f5ddc687000e&sign=9e2bf059250ba8255730ee9be4b3d3ea473f129c&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.teachernum&edupass_ssotgt=&itemCheck=false&color=',
+    dataType: 'json',
+
+    success: function(data) {
+      var myData = data['pageMaplist'];
+      $('#coach_num').html(myData[0].coachnum);
+      $('#classteacher_num').html(myData[0].classteanum);
+      $('#theis_num').html(myData[0].theisteanum);
+    }
+  })
+});
+
+function getTable(data) {
+  var tableHtml = template('myTable', data);
+  $('#table').html(tableHtml);
+  var ths = document.querySelectorAll('tr th');
+  ths.forEach(function(ele) {
+    ele.style.width = '25%';
+  });
+};
+
+function getBrokenLine(myData) {
+  var myChart = echarts.init(document.getElementById('brokenLine'));
+
+  var legendArr = ['辅导教师', '班主任', '论文老师'],
+      StationNameArr = [],
+      classteanumArr = [],
+      coachnumArr = [],
+      theisteanumArr = [];
+
+  myData.forEach(function(ele) {
+    StationNameArr.push(ele.StationName);
+    classteanumArr.push(ele.classteanum);
+    coachnumArr.push(ele.coachnum);
+    theisteanumArr.push(ele.theisteanum);
+  });
+
+  var option = {
+    color: ['#C0504D','#9BBB59','#1381BD'],
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:legendArr
+    },
+   
+    xAxis:  {
+        type: 'category',
+        boundaryGap: true,
+        data: StationNameArr,
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        },
+        axisTick: {
+            show: false,
+            alignWithLabel: true
+        },
+        splitLine: {
+            show: true
+        }
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            show: true,
+            formatter: '{value}'
+        },
+        splitLine: {
+            show: false,
+        },
+        axisTick: {
+            show: false
+        },
+        axisLine: {
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        }
+    },
+    series: [
+        {
+            name:'班主任',
+            type:'line',
+            data:classteanumArr,
+            symbol: 'rect'
+        },
+        {
+            name:'论文老师',
+            type:'line',
+            data:theisteanumArr,
+            symbol: 'arrow'
+        },
+        {
+            name:'辅导教师',
+            type:'line',
+            data:coachnumArr,
+            symbol: 'arrow'
+        }
+    ]
+  };
+
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+
+</script>
+</body>
+</html>

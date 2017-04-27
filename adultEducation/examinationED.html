@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>examinationED</title>
+  <link href="css/bootstrap-common.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="js/getRequest.js"></script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
+  </script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/jquery.min.js?v=170418'><\/script>"); 
+  </script>
+</head>
+
+<body>
+<div class="container-fluid">
+  <h3>已完成考试情况</h3>
+  <div id="examination" class="content">
+    <div class="top">
+      <h4 class="examine">选择考试批次</h4 class="examine">
+      <ul id="batch_id" class="item-parent"></ul>
+    </div>
+
+    <div class="bottom">
+      <h4>数据统计</h4>
+      <div id="table"></div>
+    </div>    
+  </div>
+</div>
+
+<script id="itemSystemIds" type="text/html">
+  {{each pagelist as value i}}
+  <li class="text-center inline-item" data-id="{{value}}"><a href="#close">{{value}}考试批次</a></li>
+  {{/each}}
+</script>
+
+
+<script id="myTable" type="text/html">
+<table class="table table-bordered table-condensed text-center">
+  <tbody>
+    <tr class="text-center">
+      <th class="text-center">函授站</th>
+      <th class="text-center">应考人数</th>
+      <th class="text-center">实考人数</th>
+      <th class="text-center">缺考人数</th>
+      <th class="text-center">缺考率</th>
+      <th class="text-center">及格率</th>
+    </tr>
+
+    {{each pagelist as value i}}
+    <tr class="text-center">
+      <td class="text-center">{{value[1]}}</td>
+      <td class="text-center">{{value[2]}}</td>
+      <td class="text-center">{{value[3]}}</td>
+      <td class="text-center">{{value[4]}}</td>
+      <td class="text-center">{{value[5]}}</td>
+      <td class="text-center">{{value[6]}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</script>
+
+<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
+<script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript">
+
+$(function() {
+
+  var tableHtml = '',
+      parameters = getParameters(),
+      thisUrl = getSite(),
+      itemSystem = {itemSystemIds:'2c9091fd58f5e2360158f5e239f10008'},
+      WithoutitemSystem = WithoutitemSystemIds(),
+      sumData = Object.assign(itemSystem,WithoutitemSystem);
+
+  $.ajax({
+    type: 'POST',
+    url: thisUrl,
+    data: sumData,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=75f08469115d64e056ece07a3da93439ab9f5833&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.completedexam&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5e2360158f5e239f10008;2c9091fd58f5e2360158f5e239f2000e;2c9091fd58f5e2360158f5e239f30010;2c9091fd58f5e2360158f5e239f50012;2c9091fd58f5e2360158f5e239f60014;2c9091fd58f5e2360158f5e239f60016;2c9091fd58f5e2360158f5e239f60018&color=',
+    dataType: 'json',
+    success: function(data) {
+      var batchHtml = template('itemSystemIds',data);
+      $('#batch_id').html(batchHtml);
+      
+      // 设置默认显示条目
+      var defaultShowItem = $('#batch_id li').eq(0);
+          defaultItems = defaultShowItem[0].dataset.id,
+          oDefault = {batchname: defaultItems},
+          defaultData = Object.assign(oDefault,parameters);
+
+      defaultShowItem.addClass('active');
+
+      $.ajax({
+        type: 'POST',
+        url: thisUrl,
+        data: defaultData,
+        // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=75f08469115d64e056ece07a3da93439ab9f5833&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.completedexam&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5e2360158f5e239f10008;2c9091fd58f5e2360158f5e239f2000e;2c9091fd58f5e2360158f5e239f30010;2c9091fd58f5e2360158f5e239f50012;2c9091fd58f5e2360158f5e239f60014;2c9091fd58f5e2360158f5e239f60016;2c9091fd58f5e2360158f5e239f60018&color=',
+        dataType: 'json',
+        success: function(data){
+          getTable(data);
+        }
+      })
+    }
+  });
+  // 设置默认显示条目
+
+  // 事件委托添加点击事件
+  var arrTemp = [];
+  $('#batch_id').on('click', 'li', function(e) {
+    // 单选：添加选中样式
+    $('#batch_id li').eq(0).removeClass('active');
+    var addIndex = $(this).index();
+    var delIndex = arrTemp.shift();
+    $('#batch_id li').eq(delIndex).removeClass('active');
+    $(this).addClass('active');
+    arrTemp.push(addIndex);
+
+    // 选择数据
+    var selectedItems = this.dataset.id,
+        oSelected = {batchname: selectedItems},
+        selectedData = Object.assign(oSelected,parameters);
+    $.ajax({
+      type: 'POST',
+      url: thisUrl,
+      data: selectedData,
+      dataType: 'json',
+      success: function(data){
+        getTable(data);
+      }
+    })
+  })
+});
+
+function getTable(data) {
+  var tableHtml = template('myTable', data);
+  $('#table').html(tableHtml);
+  $('tr th').css('width','18%');
+};
+
+</script>
+</body>
+</html>

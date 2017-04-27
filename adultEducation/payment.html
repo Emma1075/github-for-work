@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>payment</title>
+  <link href="css/bootstrap-common.min.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" src="js/getRequest.js"></script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
+  </script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/jquery.min.js?v=170418'><\/script>"); 
+  </script>
+</head>
+
+<body>
+<div class="container-fluid">
+  <h3>交费金额</h3>
+  <div id="payment" class="content">
+    <div class="top row">
+      <div class="inline-item col-lg-4 col-md-4 col-sm-4">
+        <div class="item-parent text-center">
+          <div class="item-child">
+            <p><span class="text-mute">应收金额</span></p>
+            <p><span id="total_sum" class="text-number"></span><span class="mute"> 元</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="inline-item col-lg-4 col-md-4 col-sm-4">
+        <div class="item-parent text-center">
+          <div class="item-child">
+            <p><span class="text-mute">实收金额</span></p>
+            <p><span id="pay_sum" class="text-number"></span><span class="mute"> 元</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="middle">
+      <h4>数据分析</h4>
+      <div id="brokenLine"></div>
+    </div>
+
+    <div class="bottom">
+      <h4>数据统计</h4>
+      <div id="table">
+        表格
+      </div>
+    </div>    
+  </div>
+</div>
+
+<script id="myTable" type="text/html">
+<table class="table table-bordered table-condensed text-center">
+  <tbody>
+    <tr class="text-center">
+      <th class="text-center">函授站</th>
+      <th class="text-center">实收金额</th>
+      <th class="text-center">实收金额</th>
+    </tr>
+    {{each pageMaplist as value i}}
+    <tr class="text-center">
+      <td class="text-center">{{value.stationame}}</td>
+      <td class="text-center">{{value.totalfee}}</td>
+      <td class="text-center">{{value.paysum}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</script>
+
+<!-- <script type="text/javascript" src="js/simulate-jquery-by-js.js"></script> -->
+
+<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
+<script type="text/javascript" src="js/template.js"></script>
+<script type="text/javascript">
+$(function() {
+
+  var tableHtml = '',
+      parameters = getParameters(),
+      thisUrl = getSite(),
+      itemSystem = {itemSystemIds:'2c9091fd58f2c3930158f2c3977c000c;2c9091fd58f2c3930158f2c3977e000e'},
+      WithoutitemSystem = WithoutitemSystemIds(),
+      sumData = Object.assign(itemSystem,WithoutitemSystem);
+
+  $.ajax({
+    type: 'GET',
+    url: thisUrl,
+    data: parameters,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=c5704f0e813b12fb191ba9884557fce6dbcc0672&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.pay&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f2c3930158f2c3977c000a%3B2c9091fd58f2c3930158f2c3977c000c%3B2c9091fd58f2c3930158f2c3977e000e&color=',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data['pageMaplist'];
+      // artTemplate 渲染表格
+      getTable(data);
+
+      // var ths = document.querySelectorAll('tr th');
+      // ths.forEach(function(ele) {
+      //   ele.style.width = '30%';
+      // })
+      $('tr th').css('width','30%');
+      // 得到折线图
+      getBrokenLine(myData);
+    },
+    error: function(data) {
+    	  document.write(data.responseText);
+     }
+  })
+
+  // 缴费情况
+  $.ajax({
+    type: 'GET',
+    url: thisUrl,
+    data: sumData,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?itemSystemIds=2c9091fd58f2c3930158f2c3977c000c%3B2c9091fd58f2c3930158f2c3977e000e&sign=c5704f0e813b12fb191ba9884557fce6dbcc0672&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.pay&edupass_ssotgt=&itemCheck=false&color=',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data['pageMaplist'][0];
+      $('#total_sum').html(myData.totalfee);
+      $('#pay_sum').html(myData.paysum);
+    }
+  })
+})
+
+
+function getTable(data) {
+  var tableHtml = template('myTable', data);
+  $('#table').html(tableHtml);
+}
+
+function getBrokenLine(myData) {
+  var myChart = echarts.init(document.getElementById('brokenLine'));
+
+  var legendArr = ['应收金额', '已收金额'],
+      StationNameArr = [],
+      paysumArr = [],
+      totalfeeArr = [];
+
+  myData.forEach(function(ele) {
+    StationNameArr.push(ele.stationame);
+    paysumArr.push(ele.paysum);
+    totalfeeArr.push(ele.totalfee);
+  });
+
+  var option = {
+    color: ['#1381BD','#C0504D'],
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:legendArr
+    },
+   
+    xAxis:  {
+        type: 'category',
+        boundaryGap: true,
+        data: StationNameArr,
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        },
+        axisTick: {
+            show: false,
+            alignWithLabel: true
+        },
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            show: true,
+            formatter: '{value}'
+        },
+        splitLine: {
+            show: false,
+        },
+        axisTick: {
+            show: false
+        },
+        axisLine: {
+            show: false,
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        },
+        splitLine: {
+            show: true
+        }
+    },
+    series: [
+        {
+            name:'应收金额',
+            type:'line',
+            data:totalfeeArr,
+            symbol: 'rect'
+        },
+        {
+            name:'已收金额',
+            type:'line',
+            data:paysumArr,
+            symbol: 'arrow'
+        }
+    ]
+  };
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+
+</script>
+</body>
+</html>
+

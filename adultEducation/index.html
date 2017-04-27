@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>home</title>
+  <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="top row">
+    <div id="student" class="top-left col-lg-6 col-md-6">
+      <p><span class="title-text">学生人数情况</span></p>
+      <div class="item-parent text-center">
+        <div class="item-child">
+          <a class="home" href="registered.html">
+            <p><span id="registered_num" class="text-number"></span><span class="mute"> 人</span></p>
+            <p><span class="text-mute">在籍人数</span></p>
+            </a>
+        </div>
+      </div>
+      <div class="item-parent text-center">
+        <div class="item-child">
+          <a class="home" href="graduation.html">
+            <p><span id="graduated_num" class="text-number"></span><span class="mute"> 人</span></p>
+            <p><span class="text-mute">毕业人数</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="enroll" class="top-right col-lg-6 col-md-6">
+      <p><span class="title-text">录取注册情况</span></p>
+      <div class="item-parent text-center">
+        <div class="item-child">
+          <a class="home" href="enrollment.html">
+            <p><span id="admission_num" class="text-number"></span><span class="mute"> 人</span></p>
+            <p><span class="text-mute">录取人数</span></p>
+          </a>
+        </div>
+      </div>
+      <div class="item-parent text-center">
+        <div class="item-child">
+          <a class="home" href="enrollment.html">
+            <p><span id="sign_in_num" class="text-number"></span><span class="mute"> 人</span></p>
+            <p><span class="text-mute">注册人数</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="middle row">
+    <div class="middle-left col-lg-6 col-md-6">
+      <a class="home" href="teacher.html">
+        <p><span class="title-text">教师人数情况</span></p>
+        <div id="teachers" class="col-lg-12 col-md-12"></div>
+      </a>
+    </div>
+    <div class="middle-right col-lg-6 col-md-6">
+      <a class="home" href="payment.html">
+        <p><span class="title-text">缴费情况</span></p>
+        <div id="payFees" class="col-lg-12 col-md-12"></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom row">
+    <div class="bottom-left col-lg-6 col-md-6">
+      <a class="home" href="examinationED.html">
+        <p><span class="title-text">已经完成考试情况</span></p>
+        <div id="testDone" class="col-lg-12 col-md-12"></div>
+      </a>
+    </div>
+    <div class="bottom-right col-lg-6 col-md-6">
+      <a class="home" href="examinationING.html">
+        <p><span class="title-text">进行中考试情况</span></p>
+        <div id="testIng" class="col-lg-12 col-md-12"></div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/echarts.js"></script>
+
+<script>
+$(function() {
+  window.onresize=function(){ 
+    
+  };
+  // 学生人数情况
+  $.ajax({
+    type: 'GET',
+    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.studentnum&isChart=true&itemSystemIds=2c9091fd58f2acfb0158f2ad0268000c;2c9091fd58f2acfb0158f2ad026a0010&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data.pageMaplist[0];
+      $('#registered_num').html(myData.registernum);
+      $('#graduated_num').html(myData.graduatenum);
+    }
+  })
+
+  // 录取注册人数情况
+  $.ajax({
+    type: 'GET',
+    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.register&isChart=true&itemSystemIds=2c9091fd58f5da520158f5da56b4000a;2c9091fd58f5da520158f5da56b5000c&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data.pageMaplist[0];
+      $('#admission_num').html(myData.adminum);
+      $('#sign_in_num').html(myData.regnum);
+    }
+  })
+
+  // 教师人数情况
+  $.ajax({
+    type: 'GET',
+    contentType: 'application/x-www-form-urlencoded; charset=utf-8', 
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.teachernum&isChart=true&itemSystemIds=2c9091fd58f5ddc20158f5ddc686000a;2c9091fd58f5ddc20158f5ddc686000c;2c9091fd58f5ddc20158f5ddc687000e&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      getPieChart1(data);
+      window.onresize=function(){ 
+        getPieChart1(myData);
+      };
+    }
+  })
+
+  // 缴费情况
+  $.ajax({
+    type: 'GET',
+    contentType: 'application/x-www-form-urlencoded; charset=utf-8', 
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.pay&isChart=true&itemSystemIds=2c9091fd58f2c3930158f2c3977c000c;2c9091fd58f2c3930158f2c3977e000e&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      getPieChart2(data);
+      window.onresize=function(){ 
+        getPieChart2(myData);
+      };
+    }
+  })
+
+  // 已完成考试情况
+  $.ajax({
+    type: 'GET',
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.completedexam&isChart=true&itemSystemIds=2c9091fd58f5e2360158f5e239f10008;2c9091fd58f5e2360158f5e239f60016;2c9091fd58f5e2360158f5e239f60018&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data.pageMaplist;
+      getBrokenLine(myData);
+      window.onresize=function(){ 
+        getBrokenLine(myData);
+      };
+    }
+  })
+
+  // 进行中考试情况
+  $.ajax({
+    type: 'GET',
+    url: 'http://172.16.17.125:8090/res/xbase.mvc?methods=queryJSON&method=sqlQuery&classId=com.report.dean.examing&isChart=true&itemSystemIds=2c9091fd58f622680158f62270fe0008;2c9091fd58f622680158f62271050010;2c9091fd58f622680158f622710e0012&tenantid=20008',
+    dataType: 'json',
+    success: function(data) {
+      var myData = data.pageMaplist;
+      getColumnar(myData);
+      window.onresize=function(){ 
+        getColumnar(myData);
+      };
+    }
+  })
+})
+
+// 获取折线图
+function getBrokenLine(myData) {
+  var myChart = echarts.init(document.getElementById('testDone'));
+
+  var legendArr = ['缺考率', '及格率'];
+  var batchnameArr = [];
+  var jgrate2Arr = [];
+  var qkrateArr = [];
+
+  myData.forEach(function(ele) {
+    batchnameArr.push(ele.batchname);
+    jgrate2Arr.push(ele.jgrate2);
+    qkrateArr.push(ele.qkrate);
+  })
+
+  var option = {
+    color: ['#B5CFFF','#E6B9B8'],
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:legendArr
+    },
+    xAxis:  {
+        type: 'category',
+        boundaryGap: true,
+        data: batchnameArr,
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        },
+        axisTick: {
+            show: false,
+            alignWithLabel: true
+        },
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        type: 'value',
+        min: 0,
+        max: 1,
+        interval: 0.25,
+        axisLabel: {
+            show: true,
+            formatter: function(value) {
+              var newValue = (value * 100) + '%';
+              return newValue;
+            }
+        },
+        splitLine: {
+            show: false,
+        },
+        axisTick: {
+            show: false
+        },
+        axisLine: {
+            show: false,
+            lineStyle: {
+                color: '#CCCCCC'
+            }
+        },
+        splitLine: {
+            show: true
+        }
+    },
+    series: [
+        {
+            name:'缺考率',
+            type:'line',
+            data:qkrateArr,
+            symbol: 'circle'
+        },
+        {
+            name:'及格率',
+            type:'line',
+            data:jgrate2Arr,
+            symbol: 'rect'
+        }
+    ]
+  };
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+
+// 获取柱状图
+function getColumnar(myData) {
+  var myChart = echarts.init(document.getElementById('testIng'));
+
+  // booknum: 应考人数
+  var legendArr = ['应考人数', '实考人数'];
+  var batchnameArr = [];
+  var booknumArr = [];
+  var sknumArr = [];
+
+  myData.forEach(function(ele) {
+    batchnameArr.push(ele.batchname + '考试批次');
+    booknumArr.push(ele.booknum);
+    sknumArr.push(ele.sknum);
+  })
+  var option = {
+    color: ['#B5CFFF','#E6B9B8'],
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: legendArr
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01],
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: '#CCCCCC'
+          }
+        }
+    },
+    yAxis: {
+        type: 'category',
+        data: batchnameArr,
+        axisTick: {
+          show: false
+        },
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: '#CCCCCC'
+          }
+        }
+    },
+    series: [
+        {
+            name: '应考人数',
+            type: 'bar',
+            data: booknumArr
+        },
+        {
+            name: '实考人数',
+            type: 'bar',
+            data: sknumArr
+        }
+    ]
+  };
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+
+// 获取饼图
+function getPieChart1(data) {
+  var dataArr = data.itemSystemsTable;
+  var myData = data.pageMaplist[0];
+  var myDataArr = [];
+  var legendArr = [];
+  dataArr.forEach(function(ele) {
+    var tempObj = {};
+    tempObj.value = myData[ele.clazzAttribute];
+    tempObj.name = ele.title;
+    legendArr.push(ele.title);
+    myDataArr.push(tempObj);
+  })
+
+  var myChart = echarts.init(document.getElementById('teachers'));
+  var option = {
+    color: ['#B5CFFF','#FCD5B6','#E6B9B8'],
+    tooltip: {
+        trigger: 'item',
+        formatter: "{b}: <br/>{c} ({d}%)"
+    },
+    legend: {
+        padding: [100,0],
+        orient: 'vertical',
+        x: 'left',
+        data: legendArr
+    },
+    series: [
+    {
+      type:'pie',
+      radius: ['35%', '75%'],
+      avoidLabelOverlap: true,
+      label: {
+          normal: {
+              show: true,
+              formatter: '{c}',
+              position: 'inside'
+          },
+          emphasis: {
+              show: true,
+              formatter: '{c}',
+              textStyle: {
+                  fontSize: '25',
+                  fontWeight: 'bold'
+              }
+          }
+      },
+      labelLine: {
+          emphasis: {
+              show: true
+          }
+      },
+      data:myDataArr
+      }
+    ]
+  }
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+function getPieChart2(data) {
+var dataArr = data.itemSystemsTable;
+  var myData = data.pageMaplist[0];
+  var myDataArr = [];
+  var legendArr = [];
+  dataArr.forEach(function(ele) {
+    var tempObj = {};
+    tempObj.value = myData[ele.clazzAttribute];
+    tempObj.name = ele.title;
+    legendArr.push(ele.title);
+    myDataArr.push(tempObj);
+  })
+  var myChart = echarts.init(document.getElementById('payFees'));
+  var option = {
+    color:['#B5CFFF','#FCD5B6'],
+    tooltip: {
+      trigger: 'item',
+      formatter: '{b}: <br/>{c} ({d}%)'
+    },
+    legend: {
+      padding: [100,0],
+      orient: 'vertical',
+      x: 'left',
+      data: legendArr
+    },
+    series: [
+      {
+        type:'pie',
+        radius: ['35%', '75%'],
+        avoidLabelOverlap: true,
+        label: {
+          normal: {
+            show: true,
+            formatter: '{c}',
+            position: 'inside'
+          },
+          emphasis: {
+            show: true,
+            formatter: '{c}',
+            textStyle: {
+              fontSize: '25',
+              fontWeight: 'bold'
+            }
+          }
+        },
+        labelLine: {
+            emphasis: {
+                show: true
+            }
+        },
+        data:myDataArr
+      }
+    ]
+  }
+  myChart.setOption(option);
+  window.addEventListener('resize', function () {
+    myChart.resize();
+  })
+}
+
+</script>
+</body>
+</html>
+
+

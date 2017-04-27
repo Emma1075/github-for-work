@@ -1,0 +1,193 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ededed;
+  font-family: '脦垄脠铆脩脜潞脷';
+}
+
+.navigation {
+  float: right;
+  margin-top: -27px;
+  color: #666;
+}
+.navigation a {
+  color: #666;
+}
+.navigation a:hover {
+  text-decoration: none;
+}
+.container {
+  margin-top: 20px;
+}
+.title-text {
+  font-family: '脦垄脠铆脩脜潞脷 Bold', '脦垄脠铆脩脜潞脷';
+  font-weight: 700;
+  font-size: 14px;
+  color: #999 !important;
+}
+
+.top,
+.middle,
+.bottom {
+  margin: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #fff;
+  color: #fff;
+}
+
+.top-left,
+.top-right {
+  margin: auto 0;
+}
+
+.item-parent.text-center {
+  float: left;
+  margin-top: 0;
+  margin-left: 5px;
+  margin-right: 0;
+  margin-bottom: 5px;
+  padding: 25px;
+  width: 48%;
+  height: 120px;
+  background-color: #BAD2FF;
+}
+
+/*麓鹿脰卤戮脫脰脨*/
+.item-parent {display: flex;}
+.item-child {margin: auto;}
+
+.text-number {
+  font-size: 35px;
+  font-weight: 700;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+
+ div.item-child p:last-child {
+  display: block;
+  margin-top: -5px;
+} 
+
+/*graduation*/
+.content {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.content .middle,
+.content .bottom {
+  margin: 20px;
+  padding: 5px;
+  color: #000;
+}
+
+.content .item-parent {
+  width: 99%;
+  background-color: #85D2D8;
+  margin: 0;
+}
+
+#columnar,
+#brokenLine,
+#teachers,
+#payFees,
+#testDone,
+#testIng {
+  height: 300px;
+}
+
+/*payment 陆脡路脩陆冒露卯*/
+
+.mute {
+  font-size: 16px;
+  font-weight: 700;  
+}
+
+p .text-mute {
+  font-size: 18px;
+}
+
+ul {
+  text-align:justify;
+}
+
+/*examination 驴录脢脭脜煤麓脦*/
+#examination .top {
+  color: #000;
+}
+
+#examination .top p {
+  font-size: 18px;
+  margin-left: 15px;
+}
+#examination .item-parent {
+  background-color: #fff;
+  margin-left: 10px;
+}
+
+#examination .top li {
+  display: inline-block;
+  display: flex;
+}
+#examination .top li {
+  width: 25%;
+  height: 38px;
+  margin: 5px;
+  background-color: #E8E8E8;
+  cursor: pointer;
+}
+
+#examination .top li a {
+  margin: auto;
+  color: #696969;
+  text-decoration: none;
+}
+
+#examination .top li:hover {
+  background-color: #85D2E2;
+  color: #fff;
+}
+
+li.active {
+  background-color: #85D2E2!important;
+  cursor: default!important;
+}
+
+li.active a {
+  cursor: default!important;
+}
+
+/*table*/
+table th {
+  background-color: #F9F9F9;
+}
+
+a.home {
+  color: #fff;
+  text-decoration: none;
+}
+
+.inline-item {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.top {
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+
+.top .examine {
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+#table {
+  margin-top: 20px;
+}

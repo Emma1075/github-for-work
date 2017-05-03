@@ -56,7 +56,6 @@
   </table>
 </script>
 
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
 <script type="text/javascript" src="js/template.js"></script>
 
 <script type="text/javascript">
@@ -73,7 +72,6 @@ $(function() {
     type: 'POST',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=841c0c1674543080a3b2d8bb78af36dedf9800bb&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.examing&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f622680158f62270fe0008&color=',
     dataType: 'json',
     success: function(data) {
       var batchHtml = template('itemSystemIds',data);
@@ -91,7 +89,6 @@ $(function() {
         type: 'POST',
         url: thisUrl,
         data: defaultData,
-        // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=841c0c1674543080a3b2d8bb78af36dedf9800bb&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.examing&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f622680158f62270fe0008;2c9091fd58f622680158f6227104000e;2c9091fd58f622680158f62271050010;2c9091fd58f622680158f622710e0012&color=',
         dataType: 'json',
         success: function(data){
           getTable(data);

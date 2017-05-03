@@ -64,7 +64,6 @@
   </table>
 </script>
 
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
 <script type="text/javascript" src="js/template.js"></script>
 <script type="text/javascript">
 
@@ -81,7 +80,6 @@ $(function() {
     type: 'POST',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=75f08469115d64e056ece07a3da93439ab9f5833&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.completedexam&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5e2360158f5e239f10008;2c9091fd58f5e2360158f5e239f2000e;2c9091fd58f5e2360158f5e239f30010;2c9091fd58f5e2360158f5e239f50012;2c9091fd58f5e2360158f5e239f60014;2c9091fd58f5e2360158f5e239f60016;2c9091fd58f5e2360158f5e239f60018&color=',
     dataType: 'json',
     success: function(data) {
       var batchHtml = template('itemSystemIds',data);
@@ -99,7 +97,6 @@ $(function() {
         type: 'POST',
         url: thisUrl,
         data: defaultData,
-        // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=75f08469115d64e056ece07a3da93439ab9f5833&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.completedexam&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5e2360158f5e239f10008;2c9091fd58f5e2360158f5e239f2000e;2c9091fd58f5e2360158f5e239f30010;2c9091fd58f5e2360158f5e239f50012;2c9091fd58f5e2360158f5e239f60014;2c9091fd58f5e2360158f5e239f60016;2c9091fd58f5e2360158f5e239f60018&color=',
         dataType: 'json',
         success: function(data){
           getTable(data);

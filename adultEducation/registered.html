@@ -67,9 +67,6 @@
   </table>
 </script>
 
-<!-- <script type="text/javascript" src="js/simulate-jquery-by-js.js"></script> -->
-
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
 <script type="text/javascript" src="js/template.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -84,18 +81,13 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data:parameters,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=f84cc36e29cdbd3ecad48dab5991b67b4f410104&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.studentnum&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f2acfb0158f2ad02670006%3B2c9091fd58f2acfb0158f2ad0268000a%3B2c9091fd58f2acfb0158f2ad0268000c%3B2c9091fd58f2acfb0158f2ad0269000e&color=',
     dataType: 'json',
     success: function(data) {
       myData = data.pageMaplist;
       // artTemplate 渲染表格
       getTable(data);
       // 设定表格宽度
-      var ths = document.querySelectorAll('tr th');
-      ths.forEach(function(ele) {
-        ele.style.width = '30%';
-      })
-      // $('tr th').css('width','30%');
+      $('tr th').css('width','30%');
       // 得到折线图
       getBrokenLine(myData);
     },
@@ -109,7 +101,6 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?itemSystemIds=2c9091fd58f2acfb0158f2ad0268000a%3B2c9091fd58f2acfb0158f2ad0268000c&sign=f84cc36e29cdbd3ecad48dab5991b67b4f410104&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.studentnum&edupass_ssotgt=&itemCheck=false&color=',
     dataType: 'json',
     success: function(data) {
       var sumNumHtml = template('sumNumber', data);
@@ -157,7 +148,6 @@ function getBrokenLine(myData) {
         },
         axisTick: {
             show: false,
-            // alignWithLabel: true
         },
         splitLine: {
             show: false

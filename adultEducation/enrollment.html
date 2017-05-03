@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>enrollment</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/bootstrap-common.min.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
   <script type="text/javascript">
@@ -71,9 +71,6 @@
   </table>
 </script>
 
-<!-- <script type="text/javascript" src="js/simulate-jquery-by-js.js"></script> -->
-
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
 <script type="text/javascript" src="js/template.js"></script>
 <script type="text/javascript">
 
@@ -90,7 +87,6 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data: parameters,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=5d5d175b0700456a831ae01c915366483b0b3011&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.register&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5da520158f5da56b40008%3B2c9091fd58f5da520158f5da56b4000a%3B2c9091fd58f5da520158f5da56b5000c&color=',
     dataType: 'json',
     success: function(data) {
       var myData = data['pageMaplist'];
@@ -110,7 +106,6 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?itemSystemIds=2c9091fd58f5da520158f5da56b4000a%3B2c9091fd58f5da520158f5da56b5000c&sign=5d5d175b0700456a831ae01c915366483b0b3011&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.register&edupass_ssotgt=&itemCheck=false&color=',
     dataType: 'json',
     success: function(data) {
       var myData = data['pageMaplist'][0];
@@ -123,10 +118,6 @@ $(function() {
 function getTable(data) {
   var tableHtml = template('myTable', data);
   $('#table').html(tableHtml),
-  // var ths = document.querySelectorAll('tr th');
-  // ths.forEach(function(ele) {
-  //   ele.style.width = '33%';
-  // })
   $('tr th').css('width','33%');
 };
 

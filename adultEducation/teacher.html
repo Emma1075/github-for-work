@@ -83,9 +83,6 @@
   </table>
 </script>
 
-<!-- <script type="text/javascript" src="js/simulate-jquery-by-js.js"></script> -->
-
-<!-- <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script> -->
 <script type="text/javascript" src="js/template.js"></script>
 <script type="text/javascript">
 
@@ -102,7 +99,6 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data: parameters,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=9e2bf059250ba8255730ee9be4b3d3ea473f129c&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.teachernum&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f5ddc20158f5ddc6850008%3B2c9091fd58f5ddc20158f5ddc686000a%3B2c9091fd58f5ddc20158f5ddc686000c%3B2c9091fd58f5ddc20158f5ddc687000e&color=',
     dataType: 'json',
     success: function(data) {
       var myData = data['pageMaplist'];
@@ -123,7 +119,6 @@ $(function() {
     type: 'GET',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?itemSystemIds=2c9091fd58f5ddc20158f5ddc686000a%3B2c9091fd58f5ddc20158f5ddc686000c%3B2c9091fd58f5ddc20158f5ddc687000e&sign=9e2bf059250ba8255730ee9be4b3d3ea473f129c&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.teachernum&edupass_ssotgt=&itemCheck=false&color=',
     dataType: 'json',
 
     success: function(data) {
@@ -138,10 +133,10 @@ $(function() {
 function getTable(data) {
   var tableHtml = template('myTable', data);
   $('#table').html(tableHtml);
-  var ths = document.querySelectorAll('tr th');
-  ths.forEach(function(ele) {
-    ele.style.width = '25%';
-  });
+
+  // 设定表格宽度
+  $('tr th').css('width','25%');
+
 };
 
 function getBrokenLine(myData) {

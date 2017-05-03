@@ -183,11 +183,12 @@ a.home {
   margin-bottom: -15px;
 }
 
-.top .examine {
+#table {
+  margin-top: 20px;
+}
+
+h4.examine {
   margin-left: 15px;
   margin-top: 15px;
 }
 
-#table {
-  margin-top: 20px;
-}

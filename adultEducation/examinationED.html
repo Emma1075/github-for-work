@@ -4,9 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>examinationED</title>
-  <link href="css/bootstrap-common.min.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
+  <script type="text/javascript">
+  var isIE8 = myBrowser();
+  if (isIE8) {
+    document.write("<link href='css/bootstrap-common.min.css' rel='stylesheet' media='screen'>"); 
+  } else {
+    document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
+  }
+  </script>
   <script type="text/javascript">
     document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
   </script>

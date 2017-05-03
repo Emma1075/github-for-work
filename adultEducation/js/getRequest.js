@@ -29,3 +29,34 @@ function getSite() {
   var strUrl = url.split('/res')[0] + '/res/xbase.mvc';
   return strUrl;
 };
+
+// 判断是否是 IE 浏览器
+function myBrowser () {
+  var Sys = {};
+  var ua = navigator.userAgent.toLowerCase();
+  if (window.ActiveXObject) {
+    Sys.ie = ua.match(/msie ([\d.]+)/)[1];
+    //获取版本
+    var ie_version = 6;
+    if (Sys.ie.indexOf("7") > -1) {
+        ie_version = 7;
+    }
+    if (Sys.ie.indexOf("8") > -1) {
+        ie_version = 8;
+    }
+    if (Sys.ie.indexOf("9") > -1) {
+        ie_version = 9;
+    }
+    if (Sys.ie.indexOf("10") > -1) {
+        ie_version = 10;
+    }
+    if (Sys.ie.indexOf("11") > -1) {
+        ie_version = 11;
+    }
+  };
+  if (ie_version <= 8) {
+    return true;
+  } else {
+    return false;
+  }
+}

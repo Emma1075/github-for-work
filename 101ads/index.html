@@ -150,11 +150,11 @@
 														<div class="form-horizontal collapse in" id="One">
 															<div class="form-body">
 																<div class="row">
-																	<div class="col-md-12">
+																	<div class="col-md-4">
 																		<div class="form-group">
-																			<label class="col-md-1 control-label">站点筛选</label>
-																			<div class="col-md-11">
-																				<div class="radio-list" style="margin-top:-2px;">
+																			<label class="col-md-4 control-label">站点筛选</label>
+																			<div class="col-md-8">
+																				<!-- <div class="radio-list" style="margin-top:-2px;">
 																					<div class="row">
 																						<label class="radio-inline">
 																							<input type="radio" name="type" value="" checked="checked"> 全部
@@ -166,7 +166,9 @@
 																							<input type="radio" name="type" value="2"> 101门户WAP
 																						</label>
 																					</div>
-																				</div>
+																				</div> -->
+																				<select name="site" class="form-control select-default w200">
+																				</select>
 																			</div>
 																		</div>
 																	</div>
@@ -278,7 +280,16 @@ jQuery(document).ready(function() {
 		}
 	};
 
+	var queryForm = {
+		resultList: {
+			queryterm: 'site',
+			tableQuery: queryTable.resultList
+		}
+	};
+
+
 	showLoading(1);
+	createform(queryForm.resultList,createtable);
 	createtable(queryTable.resultList);
 
 	// 筛选功能 => base.js 文件

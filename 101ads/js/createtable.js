@@ -1,9 +1,9 @@
 // var pathUrl = "http://ggtj.chinaedu.com/rec/";
 // var pathUrl = "http://172.16.16.96:9080/rec/";
-// var pathUrl = "/rec/";
+var pathUrl = "/rec/";
 
 // wang yue's computer
-var pathUrl = "http://172.16.16.136:9080/rec/";
+// var pathUrl = "http://172.16.16.136:9080/rec/";
 var picUrl = "http://www.chinaedu.com"
 
 // var picUrl = "";
@@ -125,6 +125,7 @@ function createViewDate(opt) {
 		tableId = opt.tableId,
 		method = opt.method,
 		columns = opt.columns,
+		url = ""
 		params = "",
 		_tempstr = "";
 
@@ -133,8 +134,13 @@ function createViewDate(opt) {
 		return _tempstr
 	});
 	params = _tempstr;
+
+
+	var date1=$("#dataSelect input[name='dataBegin']").val(),
+		date2=$("#dataSelect input[name='dataEnd']").val();
 	
-	var url = getURL(opt,false) + params;
+	params += "&date1="+date1+"&date2="+date2;
+	url = pathUrl + method + params + "&t=" + +new Date().getTime();
 
 	$.ajax(url,{
 		type:"get",

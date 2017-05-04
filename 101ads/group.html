@@ -165,7 +165,7 @@
 																		<div class="form-group">
 																			<label class="col-md-4 control-label">站点筛选</label>
 																			<div class="col-md-8">
-																				<select name="wsid" class="form-control select-default w200">
+																				<select name="site" class="form-control select-default w200">
 																				</select>
 																			</div>
 																		</div>
@@ -294,7 +294,7 @@
 																		<div class="form-group">
 																			<label class="col-md-4 control-label">站点筛选</label>
 																			<div class="col-md-8">
-																				<select name="wsid" class="form-control select-default w200">
+																				<select name="site" class="form-control select-default w200">
 																				</select>
 																			</div>
 																		</div>
@@ -394,7 +394,7 @@
 																		<div class="form-group">
 																			<label class="col-md-4 control-label">站点筛选</label>
 																			<div class="col-md-8">
-																				<select name="wsid" class="form-control select-default w200">
+																				<select name="site" class="form-control select-default w200">
 																				</select>
 																			</div>
 																		</div>
@@ -500,7 +500,7 @@
 																		<div class="form-group">
 																			<label class="col-md-4 control-label">站点筛选</label>
 																			<div class="col-md-8">
-																				<select name="wsid" class="form-control select-default w200">
+																				<select name="site" class="form-control select-default w200">
 																				</select>
 																			</div>
 																		</div>
@@ -645,19 +645,19 @@ jQuery(document).ready(function() {
 
 	var queryForm = {
 		advertising: {
-			queryterm: "wsid_tplid_apid_cid",
+			queryterm: "site_tplid_apid_cid",
 			tableQuery: queryTable.advertising,
 		},
 		templet: {
-			queryterm:"wsid_tplid",
+			queryterm:"site_tplid",
 			tableQuery:queryTable.templet
 		},
 		column:{
-			queryterm:"wsid_cid",
+			queryterm:"site_cid",
 			tableQuery:queryTable.column
 		},
 		website:{
-			queryterm:"wsid",
+			queryterm:"site",
 			tableQuery:queryTable.website
 		}
 

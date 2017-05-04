@@ -1,10 +1,10 @@
 // var pathUrl = "http://ggtj.chinaedu.com/rec/";
 // var pathUrl = "http://172.16.16.96:9080/rec/";
-// var pathUrl = "/rec/";
+var pathUrl = "/rec/";
 
 
 // wang yue's computer
-var pathUrl = "http://172.16.16.136:9080/rec/"
+// var pathUrl = "http://172.16.16.136:9080/rec/";
 
 
 function createform(opt,fn) {
@@ -15,8 +15,26 @@ function createform(opt,fn) {
 
 	for (var j=0; j<querytermLen; j++) {
 		switch (queryterm[j]) {
-			case"wsid":
-				$("#"+tableId+" select[name='wsid']").html("<option value=\"\">101教育PC</option>");
+			case"site":
+				// $("#"+tableId+" select[name='site']").html("<option value=\"\">101教育PC</option>");
+				$.ajax(pathUrl + "adver.adv?method=querySite&t="+new Date().getTime()+"",{
+					type:"get",
+					async:false,
+					success:function(data) {
+						var pageList=eval("("+data+")"),
+							pageListLen=pageList.length,
+							html="";
+
+						for (var i=0; i<pageListLen; i++) {
+							if (i==0) {
+								site=pageList[i].site_id;
+							};
+							html+="<option value=\""+pageList[i].site_id+"\">"+pageList[i].site_name+"</option>";
+						};
+
+						$("#"+tableId+" select[name='site']").html(html);
+					}
+				});
 				break;
 			case"tplid":
 				$.ajax(pathUrl + "gateway.mvc?method=queryTemplate&t="+new Date().getTime()+"",{

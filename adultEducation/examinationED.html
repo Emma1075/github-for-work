@@ -9,16 +9,20 @@
   <script type="text/javascript">
   var isIE8 = myBrowser();
   if (isIE8) {
-    document.write("<link href='css/bootstrap-common.min.css' rel='stylesheet' media='screen'>"); 
+    document.write("<link href='css/bootstrap-common.min.css' rel='stylesheet'>"); 
   } else {
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
-  <script type="text/javascript">
-    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
-  </script>
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+  <![endif]-->
   <script type="text/javascript">
     document.write("<script src='"+ onlineURL +"plugins/jquery.min.js?v=170418'><\/script>"); 
+  </script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
   </script>
 </head>
 
@@ -93,8 +97,8 @@ $(function() {
       $('#batch_id').html(batchHtml);
       
       // 设置默认显示条目
-      var defaultShowItem = $('#batch_id li').eq(0);
-          defaultItems = defaultShowItem[0].dataset.id,
+      var defaultShowItem = $('#batch_id li').eq(0),
+          defaultItems = get_dataset(defaultShowItem[0]).id,
           oDefault = {batchname: defaultItems},
           defaultData = Object.assign(oDefault,parameters);
 
@@ -111,7 +115,6 @@ $(function() {
       })
     }
   });
-  // 设置默认显示条目
 
   // 事件委托添加点击事件
   var arrTemp = [];
@@ -125,9 +128,10 @@ $(function() {
     arrTemp.push(addIndex);
 
     // 选择数据
-    var selectedItems = this.dataset.id,
+    var selectedItems = get_dataset(this).id,
         oSelected = {batchname: selectedItems},
         selectedData = Object.assign(oSelected,parameters);
+        
     $.ajax({
       type: 'POST',
       url: thisUrl,
@@ -145,6 +149,7 @@ function getTable(data) {
   $('#table').html(tableHtml);
   $('tr th').css('width','18%');
 };
+
 
 </script>
 </body>

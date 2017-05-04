@@ -9,19 +9,22 @@
   <script type="text/javascript">
   var isIE8 = myBrowser();
   if (isIE8) {
-    document.write("<link href='css/bootstrap-common.min.css' rel='stylesheet' media='screen'>"); 
+    document.write("<link href='css/bootstrap-common.min.css' rel='stylesheet'>"); 
   } else {
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
-  <script type="text/javascript">
-    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
-  </script>
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+  <![endif]-->
   <script type="text/javascript">
     document.write("<script src='"+ onlineURL +"plugins/jquery.min.js?v=170418'><\/script>"); 
   </script>
+  <script type="text/javascript">
+    document.write("<script src='"+ onlineURL +"plugins/echarts/echarts.min.js?v=170418'><\/script>"); 
+  </script>
 </head>
-
 <body>
 <div class="container-fluid">
   <h3>进行中考试情况</h3>
@@ -79,6 +82,7 @@ $(function() {
     type: 'POST',
     url: thisUrl,
     data: sumData,
+    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=841c0c1674543080a3b2d8bb78af36dedf9800bb&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.examing&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f622680158f62270fe0008&color=',
     dataType: 'json',
     success: function(data) {
       var batchHtml = template('itemSystemIds',data);
@@ -86,7 +90,7 @@ $(function() {
 
       // 设置默认显示条目
       var defaultShowItem = $('#batch_id li').eq(0),
-          defaultItems = defaultShowItem[0].dataset.id,
+          defaultItems = get_dataset(defaultShowItem[0]).id,
           oDefault = {batchname: defaultItems},
           defaultData = Object.assign(oDefault,parameters);
 
@@ -121,7 +125,7 @@ $(function() {
     arrTemp.push(addIndex);
 
     // 选择数据
-    var selectedItems = this.dataset.id,
+    var selectedItems = get_dataset(this).id,
         oSelected = {batchname: selectedItems},
         selectedData = Object.assign(oSelected,parameters);
 
@@ -141,7 +145,7 @@ function getTable(data) {
   var tableHtml = template('myTable', data);
   $('#table').html(tableHtml);
   $('tr th').css('width','33%');
-};
+};  
 
 </script>
 

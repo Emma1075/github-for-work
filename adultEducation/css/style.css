@@ -75,7 +75,7 @@ body {
 
 /*graduation*/
 .content {
-  margin-top: 25px;
+  margin-top: 0!important;
   padding: 20px;
   background-color: #fff;
 }
@@ -136,9 +136,10 @@ ul {
   display: flex;
 }
 #examination .top li {
-  width: 25%;
+  width: 24%!important;
   height: 38px;
-  margin: 5px;
+  margin: 5px 10px;
+  margin: 5px 0\9;
   background-color: #E8E8E8;
   cursor: pointer;
 }
@@ -192,3 +193,7 @@ h4.examine {
   margin-top: 15px;
 }
 
+#examination li.inline-item {
+  height: 38px;
+  line-height: 38px!important;
+}

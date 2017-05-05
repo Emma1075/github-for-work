@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>examinationING</title>
-  <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
   <script type="text/javascript">
   var isIE8 = myBrowser();
@@ -14,6 +13,7 @@
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
+  <link rel="stylesheet" href="css/style.css">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
@@ -82,7 +82,6 @@ $(function() {
     type: 'POST',
     url: thisUrl,
     data: sumData,
-    // url: 'http://172.16.4.89:8080/res/xbase.mvc?sign=841c0c1674543080a3b2d8bb78af36dedf9800bb&methods=queryJSON&method=sqlQuery&isChart=true&tenantid=30001&classId=com.report.dean.examing&edupass_ssotgt=&itemCheck=false&itemSystemIds=2c9091fd58f622680158f62270fe0008&color=',
     dataType: 'json',
     success: function(data) {
       var batchHtml = template('itemSystemIds',data);

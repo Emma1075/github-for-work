@@ -5,7 +5,18 @@
 
 body {
   background-color: #ededed;
-  font-family: '脦垄脠铆脩脜潞脷';
+  font-family: "Microsoft YaHei",Sans-serif!important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div {
+  font-family: "Microsoft YaHei",Sans-serif!important;
 }
 
 .navigation {
@@ -23,7 +34,7 @@ body {
   margin-top: 20px;
 }
 .title-text {
-  font-family: '脦垄脠铆脩脜潞脷 Bold', '脦垄脠铆脩脜潞脷';
+  font-family:"Microsoft YaHei",Sans-serif!important;
   font-weight: 700;
   font-size: 14px;
   color: #999 !important;

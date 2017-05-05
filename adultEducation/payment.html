@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>payment</title>
-  <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
   <script type="text/javascript">
   var isIE8 = myBrowser();
@@ -14,6 +13,7 @@
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
+  <link rel="stylesheet" href="css/style.css">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
@@ -28,13 +28,13 @@
 
 <body>
 <div class="container-fluid">
-  <h3>交费金额</h3>
+  <h3>交费情况</h3>
   <div id="payment" class="content">
     <div class="top row">
       <div class="inline-item col-lg-4 col-md-4 col-sm-4">
         <div class="item-parent text-center">
           <div class="item-child">
-            <p><span class="text-mute">应收金额</span></p>
+            <p><span class="text-mute">应收学费</span></p>
             <p><span id="total_sum" class="text-number"></span><span class="mute"> 元</span></p>
           </div>
         </div>
@@ -42,7 +42,7 @@
       <div class="inline-item col-lg-4 col-md-4 col-sm-4">
         <div class="item-parent text-center">
           <div class="item-child">
-            <p><span class="text-mute">实收金额</span></p>
+            <p><span class="text-mute">已收学费</span></p>
             <p><span id="pay_sum" class="text-number"></span><span class="mute"> 元</span></p>
           </div>
         </div>
@@ -68,8 +68,8 @@
   <tbody>
     <tr class="text-center">
       <th class="text-center">函授站</th>
-      <th class="text-center">实收金额</th>
-      <th class="text-center">实收金额</th>
+      <th class="text-center">应收学费</th>
+      <th class="text-center">已收学费</th>
     </tr>
     {{each pageMaplist as value i}}
     <tr class="text-center">
@@ -134,7 +134,7 @@ function getTable(data) {
 function getBrokenLine(myData) {
   var myChart = echarts.init(document.getElementById('brokenLine'));
 
-  var legendArr = ['应收金额', '已收金额'],
+  var legendArr = ['应收学费', '已收学费'],
       StationNameArr = [],
       paysumArr = [],
       totalfeeArr = [];
@@ -196,13 +196,13 @@ function getBrokenLine(myData) {
     },
     series: [
         {
-            name:'应收金额',
+            name:'应收学费',
             type:'line',
             data:totalfeeArr,
             symbol: 'rect'
         },
         {
-            name:'已收金额',
+            name:'已收学费',
             type:'line',
             data:paysumArr,
             symbol: 'arrow'

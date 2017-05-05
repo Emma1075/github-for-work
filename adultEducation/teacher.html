@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>teacher</title>
-  <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
   <script type="text/javascript">
   var isIE8 = myBrowser();
@@ -14,6 +13,7 @@
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
+  <link rel="stylesheet" href="css/style.css">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
@@ -124,7 +124,6 @@ $(function() {
     }
   })
   
-  
   // 总
   $.ajax({
     type: 'GET',
@@ -147,7 +146,6 @@ function getTable(data) {
 
   // 设定表格宽度
   $('tr th').css('width','25%');
-
 };
 
 function getBrokenLine(myData) {

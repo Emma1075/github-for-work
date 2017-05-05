@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>enrollment</title>
-  <link rel="stylesheet" href="css/style.css">
   <script type="text/javascript" src="js/getRequest.js"></script>
   <script type="text/javascript">
   var isIE8 = myBrowser();
@@ -14,6 +13,7 @@
     document.write("<link href='"+ onlineURL +"plugins/bootstrap/css/bootstrap.min.css?v=170418' rel='stylesheet' media='screen'>"); 
   }
   </script>
+  <link rel="stylesheet" href="css/style.css">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
@@ -208,6 +208,8 @@ function getColumnar(myData) {
     ]
   };
   myChart.setOption(option);
+
+  // addEvent() 函数定义在 getRequest.js 中（兼容ie）
   addEvent(myChart, 'resize', function() {
     myChart.resize();
   });

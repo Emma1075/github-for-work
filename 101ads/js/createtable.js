@@ -1,12 +1,8 @@
-// var pathUrl = "http://ggtj.chinaedu.com/rec/";
-// var pathUrl = "http://172.16.16.96:9080/rec/";
 var pathUrl = "/rec/";
 
 // wang yue's computer
 // var pathUrl = "http://172.16.16.136:9080/rec/";
 var picUrl = "http://www.chinaedu.com"
-
-// var picUrl = "";
 
 function createtable(opt,isExport) {
 

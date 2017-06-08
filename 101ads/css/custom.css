@@ -61,8 +61,3 @@ table.dataTable thead .sorting_desc_disabled:after {
   color: #eee;
 }
 
-/*不换行*/
-table.tableCedu > thead > th,
-table.tableCedu > tbody > tr {
-  white-space: nowrap;
-}

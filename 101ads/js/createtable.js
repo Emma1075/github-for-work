@@ -1,8 +1,7 @@
-var pathUrl = "/rec/";
+var picUrl = "http://www.chinaedu.com" 
 
-// wang yue's computer
-var pathUrl = "http://172.16.16.136:9080/rec/";
-// var picUrl = "http://www.chinaedu.com"
+var pathUrl = "/rec/";
+// var pathUrl = "http://172.16.16.136:9080/rec/";
 
 function createtable(opt,isExport) {
 

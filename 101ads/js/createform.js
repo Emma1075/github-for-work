@@ -1,7 +1,6 @@
+// var pathUrl = "http://172.16.16.136:9080/rec/";
 var pathUrl = "/rec/";
 
-// wang yue's computer
-// var pathUrl = "http://172.16.16.136:9080/rec/";
 
 function createform(opt,fn) {
 	var queryterm = opt.queryterm.split("_"),

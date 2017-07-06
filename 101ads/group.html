@@ -76,6 +76,12 @@
 						<span class="title">投放报告</span>
 					</a>
 				</li>
+				<li>
+					<a href="login.html">
+						<i class="icon-off"></i>
+						<span class="title">退出登陆</span>
+					</a>
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -623,176 +629,180 @@
 var loadingFlag=0;
 
 jQuery(document).ready(function() {
-	Layout.init();
-	ComponentsPickers.init();
+	if (localStorage.getItem('userId')) {
+		Layout.init();
+		ComponentsPickers.init();
 
-	var now=new Date(),
-		beginData=new Date(now-7*24*60*60*1000);
-	$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
-	$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
-	$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
-	$(".date-picker").datepicker({
-		rtl: Metronic.isRTL(),
-		orientation: "right",
-		autoclose: true
-	});
+		var now=new Date(),
+			beginData=new Date(now-7*24*60*60*1000);
+		$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
+		$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
+		$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
+		$(".date-picker").datepicker({
+			rtl: Metronic.isRTL(),
+			orientation: "right",
+			autoclose: true
+		});
 
-	// 参数配置
-	var queryTable = {
-		advertising: {
-			formId:"adqueryterm",
-			tableId:"advertising",
-			method:"adver.adv?method=queryPositionReport",
-			columns:"apid;apname;site;tpl_name;topcname;hitnum"
-		},
-		templet: {
-			formId:"templetqueryterm",
-			tableId:"templet",
-			method:"adver.adv?method=queryTemplateReport",
-			columns:"site;tpl_name;hitnum"
-		},
-		column:{
-			formId:"columnqueryterm",
-			tableId:"column",
-			method:"adver.adv?method=queryCategoryReport",
-			columns:"site;topcname;hitnum"
-		},
-		website:{
-			formId:"websitequeryterm",
-			tableId:"website",
-			method:"adver.adv?method=queryPlatformReport",
-			columns:"site;hitnum"
+		// 参数配置
+		var queryTable = {
+			advertising: {
+				formId:"adqueryterm",
+				tableId:"advertising",
+				method:"adver.adv?method=queryPositionReport",
+				columns:"apid;apname;site;tpl_name;topcname;hitnum"
+			},
+			templet: {
+				formId:"templetqueryterm",
+				tableId:"templet",
+				method:"adver.adv?method=queryTemplateReport",
+				columns:"site;tpl_name;hitnum"
+			},
+			column:{
+				formId:"columnqueryterm",
+				tableId:"column",
+				method:"adver.adv?method=queryCategoryReport",
+				columns:"site;topcname;hitnum"
+			},
+			website:{
+				formId:"websitequeryterm",
+				tableId:"website",
+				method:"adver.adv?method=queryPlatformReport",
+				columns:"site;hitnum"
+			}
+		};
+
+		var queryForm = {
+			advertising: {
+				queryterm: "site_tplid_apid_cid",
+				tableQuery: queryTable.advertising,
+			},
+			templet: {
+				queryterm:"site_tplid",
+				tableQuery:queryTable.templet
+			},
+			column:{
+				queryterm:"site_cid",
+				tableQuery:queryTable.column
+			},
+			website:{
+				queryterm:"site",
+				tableQuery:queryTable.website
+			}
+
+		};
+
+		var queryNum = {
+			advertising: {
+				formId: "adqueryterm",
+				tableId: "advertising",
+				method: "adver.adv?method=queryPositionReportGroupDay",
+				params:[ "apid", "apname", "site", "tpl_name", "topcname"],
+				columns: "apid;apname;site;tpl_name;topcname;day;hitnum"
+			},
+			templet: {
+				formId: "templetqueryterm",
+				tableId: "templet",
+				method: "adver.adv?method=queryTemplateReportGroupDay",
+				params:[ "site", "tpl_name"],
+				columns: "site;tpl_name;day;hitnum"
+			},
+			column: {
+				formId: "columnqueryterm",
+				tableId: "column",
+				method: "adver.adv?method=queryCategoryReportGroupDay",
+				params:["site","topcname"],
+				columns: "site;topcname;day;hitnum"
+			},
+			website: {
+				formId: "websitequeryterm",
+				tableId: "website",
+				method: "adver.adv?method=queryPlatformReportGroupDay",
+				params:["site"],
+				columns: "site;day;hitnum"
+			}
+		};
+
+		var initParam = {
+			formID: ["adqueryterm", "templetqueryterm", "columnqueryterm", "websitequeryterm"],
+			tableID: ["advertising", "templet", "column", "website"]
 		}
-	};
 
-	var queryForm = {
-		advertising: {
-			queryterm: "site_tplid_apid_cid",
-			tableQuery: queryTable.advertising,
-		},
-		templet: {
-			queryterm:"site_tplid",
-			tableQuery:queryTable.templet
-		},
-		column:{
-			queryterm:"site_cid",
-			tableQuery:queryTable.column
-		},
-		website:{
-			queryterm:"site",
-			tableQuery:queryTable.website
-		}
-
-	};
-
-	var queryNum = {
-		advertising: {
-			formId: "adqueryterm",
-			tableId: "advertising",
-			method: "adver.adv?method=queryPositionReportGroupDay",
-			params:[ "apid", "apname", "site", "tpl_name", "topcname"],
-			columns: "apid;apname;site;tpl_name;topcname;day;hitnum"
-		},
-		templet: {
-			formId: "templetqueryterm",
-			tableId: "templet",
-			method: "adver.adv?method=queryTemplateReportGroupDay",
-			params:[ "site", "tpl_name"],
-			columns: "site;tpl_name;day;hitnum"
-		},
-		column: {
-			formId: "columnqueryterm",
-			tableId: "column",
-			method: "adver.adv?method=queryCategoryReportGroupDay",
-			params:["site","topcname"],
-			columns: "site;topcname;day;hitnum"
-		},
-		website: {
-			formId: "websitequeryterm",
-			tableId: "website",
-			method: "adver.adv?method=queryPlatformReportGroupDay",
-			params:["site"],
-			columns: "site;day;hitnum"
-		}
-	};
-
-	var initParam = {
-		formID: ["adqueryterm", "templetqueryterm", "columnqueryterm", "websitequeryterm"],
-		tableID: ["advertising", "templet", "column", "website"]
-	}
-
-	showLoading(1);
-	createform(queryForm.advertising,createtable);
-
-	// 点击导航栏中项目时，请求该项目数据并显示表格
-
-	$("[href='#advertising']").click(function() {
 		showLoading(1);
 		createform(queryForm.advertising,createtable);
-	})
 
-	$("[href='#templet']").click(function() {
-		showLoading(1);
-		createform(queryForm.templet,createtable);
-	})
+		// 点击导航栏中项目时，请求该项目数据并显示表格
 
-	
-	$("[href='#column']").click(function(){
-		showLoading(1);
-		createform(queryForm.column,createtable);
-	})
-
-	$("[href='#website']").click(function(){
-		showLoading(1);
-		createform(queryForm.website,createtable);
-	})
-	
-
-	$("#advertising select[name='tplid']").change(function() {
-		createAdspace($(this).val(),"advertising");
-	});
-
-	// 筛选功能 参见 base.js 中 filterTable()函数
-	// filterTable("adqueryterm",queryTable.advertising);
-	// filterTable("templetqueryterm",queryTable.templet);
-	// filterTable("columnqueryterm",queryTable.column);
-	// filterTable("websitequeryterm",queryTable.website);	
-
-	// 导出功能 参见 base.js 中 exportCSV()函数
-	// exportCSV("adqueryterm",queryTable.advertising);
-	// exportCSV("templetqueryterm",queryTable.templet);
-	// exportCSV("columnqueryterm",queryTable.column);
-	// exportCSV("websitequeryterm",queryTable.website);
-
-	// 点击表格中“点击量”，弹出模态框显示详情。 参加 base.js 中 clickModal() 函数 
-	// clickModal("advertising",queryNum.advertising);
-	// clickModal("templet",queryNum.templet);
-	// clickModal("column",queryNum.column);
-	// clickModal("website",queryNum.website);
-
-	initLoop(initParam.formID, queryTable, true, exportCSV);
-	initLoop(initParam.formID, queryTable, true, filterTable);
-	initLoop(initParam.tableID, queryNum, false, clickModal);
-	// 隐藏模态框
-	$("#ViewDate").on("hidden.bs.modal", function() {
-		$(this).removeData("bs.modal");
-	});
-
-	function initLoop(eleArr, oParams, isForm, fn) {
-		var tempArr = [
-			{"adqueryterm": "advertising"},
-			{"templetqueryterm": "templet"},
-			{"columnqueryterm": "column"},
-			{"websitequeryterm": "website"},
-		]
-		eleArr.forEach(function(ele,index) {
-			if (isForm) {
-				var opt = tempArr[index][ele];
-				fn(ele,oParams[opt]);
-			} else {
-				fn(ele,oParams[ele])
-			}
+		$("[href='#advertising']").click(function() {
+			showLoading(1);
+			createform(queryForm.advertising,createtable);
 		})
+
+		$("[href='#templet']").click(function() {
+			showLoading(1);
+			createform(queryForm.templet,createtable);
+		})
+
+		
+		$("[href='#column']").click(function(){
+			showLoading(1);
+			createform(queryForm.column,createtable);
+		})
+
+		$("[href='#website']").click(function(){
+			showLoading(1);
+			createform(queryForm.website,createtable);
+		})
+		
+
+		$("#advertising select[name='tplid']").change(function() {
+			createAdspace($(this).val(),"advertising");
+		});
+
+		// 筛选功能 参见 base.js 中 filterTable()函数
+		// filterTable("adqueryterm",queryTable.advertising);
+		// filterTable("templetqueryterm",queryTable.templet);
+		// filterTable("columnqueryterm",queryTable.column);
+		// filterTable("websitequeryterm",queryTable.website);	
+
+		// 导出功能 参见 base.js 中 exportCSV()函数
+		// exportCSV("adqueryterm",queryTable.advertising);
+		// exportCSV("templetqueryterm",queryTable.templet);
+		// exportCSV("columnqueryterm",queryTable.column);
+		// exportCSV("websitequeryterm",queryTable.website);
+
+		// 点击表格中“点击量”，弹出模态框显示详情。 参加 base.js 中 clickModal() 函数 
+		// clickModal("advertising",queryNum.advertising);
+		// clickModal("templet",queryNum.templet);
+		// clickModal("column",queryNum.column);
+		// clickModal("website",queryNum.website);
+
+		initLoop(initParam.formID, queryTable, true, exportCSV);
+		initLoop(initParam.formID, queryTable, true, filterTable);
+		initLoop(initParam.tableID, queryNum, false, clickModal);
+		// 隐藏模态框
+		$("#ViewDate").on("hidden.bs.modal", function() {
+			$(this).removeData("bs.modal");
+		});
+
+		function initLoop(eleArr, oParams, isForm, fn) {
+			var tempArr = [
+				{"adqueryterm": "advertising"},
+				{"templetqueryterm": "templet"},
+				{"columnqueryterm": "column"},
+				{"websitequeryterm": "website"},
+			]
+			eleArr.forEach(function(ele,index) {
+				if (isForm) {
+					var opt = tempArr[index][ele];
+					fn(ele,oParams[opt]);
+				} else {
+					fn(ele,oParams[ele])
+				}
+			})
+		}
+	} else {
+		window.location.href = 'login.html';
 	}
 
 });

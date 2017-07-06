@@ -74,6 +74,12 @@
 						<span class="title">投放报告</span>
 					</a>
 				</li>
+				<li>
+					<a href="login.html">
+						<i class="icon-off"></i>
+						<span class="title">退出登陆</span>
+					</a>
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -261,50 +267,53 @@
 <script>
 var loadingFlag=0;
 
-jQuery(document).ready(function() {
-	Metronic.init();
-	Layout.init();
-	ComponentsPickers.init();
+$(document).ready(function() {
+	if (localStorage.getItem('userId')) {
+		Metronic.init();
+		Layout.init();
+		ComponentsPickers.init();
 
-	var now=new Date(),
-		beginData=new Date(now-7*24*60*60*1000);
-	$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
-	$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
-	$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
-	$(".date-picker").datepicker({
-		rtl: Metronic.isRTL(),
-		orientation: "right",
-		autoclose: true
-	});
+		var now=new Date(),
+			beginData=new Date(now-7*24*60*60*1000);
+		$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
+		$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
+		$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
+		$(".date-picker").datepicker({
+			rtl: Metronic.isRTL(),
+			orientation: "right",
+			autoclose: true
+		});
 
-	var queryTable = {
-		resultList: {
-			formId:"queryterm",
-			tableId:"resultList",
-			method:"adver.adv?method=queryTotalReport",
-			columns:"v_date;dayofweek;site;hitnum"
-		}
-	};
+		var queryTable = {
+			resultList: {
+				formId:"queryterm",
+				tableId:"resultList",
+				method:"adver.adv?method=queryTotalReport",
+				columns:"v_date;dayofweek;site;hitnum"
+			}
+		};
 
-	var queryForm = {
-		resultList: {
-			queryterm: 'site',
-			tableQuery: queryTable.resultList
-		}
-	};
+		var queryForm = {
+			resultList: {
+				queryterm: 'site',
+				tableQuery: queryTable.resultList
+			}
+		};
 
+		showLoading(1);
+		createform(queryForm.resultList,createtable);
+		createtable(queryTable.resultList);
 
-	showLoading(1);
-	createform(queryForm.resultList,createtable);
-	createtable(queryTable.resultList);
+		// 筛选功能 => base.js 文件
+		filterTable("queryterm", queryTable.resultList);
 
-	// 筛选功能 => base.js 文件
-	filterTable("queryterm", queryTable.resultList);
+		// 导出功能 => base.js 文件
+		exportCSV("queryterm", queryTable.resultList);
 
-	// 导出功能 => base.js 文件
-	exportCSV("queryterm", queryTable.resultList);
+	} else {
+		window.location.href = 'login.html';	}
+})
 
-});
 </script>
 
 <script src="scripts/base.js" type="text/javascript"></script>

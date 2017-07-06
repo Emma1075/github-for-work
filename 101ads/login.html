@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Login Form</title>
+  <link rel="stylesheet" href="css/login.css">
+  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+  <section class="container">
+      <h1 class="login-header">101广告报告</h1>
+	  <div class="login">
+	  <div class="login_info">
+	  	<div id="login_error" class="error-message"></div>
+	  </div>
+      <form method="post" name="myLogin" action="index.html">
+        <p class="first">	
+        	<label for="username" class="label-item">用户名</label>
+        	<input class="input-item" id="username" type="text" name="username" value="" placeholder="请输入用户名">
+        </p>
+        <p>
+        	<label for="password" class="label-item">密码</label>
+        	<input class="input-item" id="password" type="password" name="password" value="" placeholder="请输入密码">
+        </p>
+        <p>
+        	<label for="verifyCode" class="label-item">验证码</label>
+        	<input  class="input-item" id="verifyCode" type="text" name="verifyCode" placeholder="请输入验证码" maxlength="4">
+			<span class="pass-verifyCodeImgParent" id="verifyCodeImgParent">
+				<img class="pass-verifyCodeImg" id="verifyCodeImg"></img>
+			</span>
+			<a class="pass-change-verifyCode" id="changeVerifyCode">换一张</a>
+        </p>
+        <p class="submit last"><input class="submit-btn" id="loginSubmit" type="button" name="commit" value="登陆"></p>
+      </form>
+    </div>
+
+  </section>
+
+<script src="plugins/jquery.min.js" type="text/javascript"></script>
+<script src="js/md5.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+	// var resUrl = 'http://172.16.16.136:9080/rec';
+	var resUrl = '/rec';
+	var $tip = $('#login_error');
+
+	// login out
+	var logoutUrl = resUrl + '/logout';
+	if (localStorage.getItem('userId')) {
+		$.get(logoutUrl);
+		localStorage.removeItem('userId');
+	};
+
+	// 设置验证码，点击【换一张】更换
+	$('#verifyCodeImg').attr('src',resUrl+'/captcha/get');
+	$('#changeVerifyCode').click(changeCode);
+
+	function changeCode() {
+		var $verifyImg = $('#verifyCodeImg');
+		$verifyImg.attr('src', resUrl+'/captcha/get' + '?t=' + new Date().getTime());
+	};
+
+	// 初步验证用户名
+	function checkName() {
+		var username = $('#username').val();
+		if (username == '' || username == null) {
+			$tip.html('用户名不能为空！');
+			$tip.show();
+			return false;
+		} else {
+			$tip.hide();
+			return true;
+		}
+	}
+
+	// 初步验证密码
+	function checkPwd() {
+		var password = $('#password').val();
+		if (password == '' || password == null) {
+			$tip.html('密码不能为空！');
+			$tip.show();
+			return false;
+		} else {
+			$tip.hide();
+			return true;
+		}
+	}
+
+	// 初步验证验证码
+	function checkVerify() {
+		var verifyCode = $('#verifyCode').val();
+		if (verifyCode == '' || verifyCode == null) {
+			$tip.html('验证码不能为空！');
+			$tip.show();
+			return false;
+		} else {
+			var str = /^[A-Za-z0-9]{4}$/;
+			if (str.test(verifyCode)) {
+				$tip.hide();
+				return true;	
+			} else {
+				$tip.html('验证码必须为4位！');
+				$tip.show();
+				return false;
+			}
+		}
+	}
+
+	// 登陆验证
+	function loginSubmit() {
+		var postUrl = resUrl + '/login',
+			username = $('#username').val(),
+			password = $('#password').val(),
+			verifyCode = $('#verifyCode').val(),
+			timeflag = new Date().getTime(),
+			pwdstr = '' + verifyCode + password + timeflag + username,
+			pwd = hex_md5(pwdstr);
+		
+		if(!checkName() || !checkPwd() || !checkVerify()){
+			changeCode();
+	        return;
+	    };
+
+	    $.ajax({
+	    	method:'POST',
+	    	url:postUrl,
+	    	data:{
+	    		user_name: username,
+	    		password: pwd,
+	    		captcha: verifyCode,
+	    		t: timeflag
+	    	},
+	    	dataType: 'json'    	
+	    }).done(function(data) {	
+			if (data.code == 0) {
+				$tip.html(decodeURI(data.message) + '!');
+
+				// 重新刷新验证码
+				changeCode();
+				$tip.show();
+				changeCode(); 
+			} else if (data.code == 1) {
+				localStorage.setItem('userId',data.data);
+				document.myLogin.submit();
+				window.location.href = resUrl + '/index.html';
+			}  
+	    }).fail(function() {
+	    	console.log('fail to login!');
+	    })
+	}
+
+	$tip.hide();
+	$('#loginSubmit').click(loginSubmit);
+
+</script>
+</body>
+</html>

@@ -74,6 +74,12 @@
 						<span class="title">投放报告</span>
 					</a>
 				</li>
+				<li>
+					<a href="login.html">
+						<i class="icon-off"></i>
+						<span class="title">退出登陆</span>
+					</a>
+				</li>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -381,95 +387,96 @@
 var loadingFlag=0;
 var wageNowTable;
 jQuery(document).ready(function() {
-	Layout.init();
-	ComponentsPickers.init();
+	if (localStorage.getItem('userId')) {
+		Layout.init();
+		ComponentsPickers.init();
 
-	var now=new Date(),
-		beginData=new Date(now-7*24*60*60*1000);
-	$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
-	$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
-	$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
-	$(".date-picker").datepicker({
-		rtl: Metronic.isRTL(),
-		orientation: "right",
-		autoclose: true
-	});
+		var now=new Date(),
+			beginData=new Date(now-7*24*60*60*1000);
+		$(".date-picker").data("date",now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());
+		$("input[name='dataBegin']").val(beginData.getFullYear()+"-"+((beginData.getMonth()+1)<10?"0":"")+(beginData.getMonth()+1)+"-"+(beginData.getDate()<10?"0":"")+beginData.getDate());
+		$("input[name='dataEnd']").val(now.getFullYear()+"-"+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+"-"+(now.getDate()<10?"0":"")+now.getDate());	
+		$(".date-picker").datepicker({
+			rtl: Metronic.isRTL(),
+			orientation: "right",
+			autoclose: true
+		});
 
-	var queryTable = {
-		advertise: {
-			formId:"adqueryterm",
-			tableId:"advertise",
-			method:"adver.adv?method=queryAdvertiseReportL",
-			columns:"alname;alid;site;top_name;second_name;hitnum"
-		},
-		materiel: {
-			formId:"materielqueryterm",
-			tableId:"materiel",
-			method:"adver.adv?method=queryMaterialReportL",
-			columns:"amid;amname;am_img_position;am_font_content;am_type;am_size;amt_name;amb_name;hitnum"
-		}
-	};
-	var queryForm = {
-		advertise: {
-			queryterm: "",
-			tableQuery: queryTable.advertise
-		},
-		materiel: {
-			queryterm:"",
-			tableQuery:queryTable.materiel
-		}
-	};
-	var queryNum = {
-		advertise: {
-			formId: "adqueryterm",
-			tableId: "advertise",
-			method: "adver.adv?method=queryAdvertiseReportLGroupDay",
-			params:[ "alname", "alid", "site"],
-			columns: "alname;alid;site;day;hitnum"
-		},
-		materiel: {
-			formId: "materielqueryterm",
-			tableId: "materiel",
-			method: "adver.adv?method=queryMaterialReportLGroupDay",
-			params:["amname"],
-			columns: "amname;day;hitnum"
-			// params:["amid","amname","am_img_position","am_font_content","am_type","am_size","amt_name"],
-			// columns: "amid;amname;am_img_position;am_font_content;am_type;am_size;amt_name;day;hitnum"
-		}
-	};
+		var queryTable = {
+			advertise: {
+				formId:"adqueryterm",
+				tableId:"advertise",
+				method:"adver.adv?method=queryAdvertiseReportL",
+				columns:"alname;alid;site;top_name;second_name;hitnum"
+			},
+			materiel: {
+				formId:"materielqueryterm",
+				tableId:"materiel",
+				method:"adver.adv?method=queryMaterialReportL",
+				columns:"amid;amname;am_img_position;am_font_content;am_type;am_size;amt_name;amb_name;hitnum"
+			}
+		};
+		var queryForm = {
+			advertise: {
+				queryterm: "",
+				tableQuery: queryTable.advertise
+			},
+			materiel: {
+				queryterm:"",
+				tableQuery:queryTable.materiel
+			}
+		};
+		var queryNum = {
+			advertise: {
+				formId: "adqueryterm",
+				tableId: "advertise",
+				method: "adver.adv?method=queryAdvertiseReportLGroupDay",
+				params:[ "alname", "alid", "site"],
+				columns: "alname;alid;site;day;hitnum"
+			},
+			materiel: {
+				formId: "materielqueryterm",
+				tableId: "materiel",
+				method: "adver.adv?method=queryMaterialReportLGroupDay",
+				params:["amname"],
+				columns: "amname;day;hitnum"
+				// params:["amid","amname","am_img_position","am_font_content","am_type","am_size","amt_name"],
+				// columns: "amid;amname;am_img_position;am_font_content;am_type;am_size;amt_name;day;hitnum"
+			}
+		};
 
-	showLoading(1);
-	createform(queryForm.advertise,createtable);
-
-	// 点击栏目时请求数据
-	$("[href='#advertise']").click(function() {
 		showLoading(1);
 		createform(queryForm.advertise,createtable);
-	})
 
-	$("[href='#materiel']").click(function() {
-		showLoading(1);
-		createform(queryForm.materiel,createtable);
-	})
+		// 点击栏目时请求数据
+		$("[href='#advertise']").click(function() {
+			showLoading(1);
+			createform(queryForm.advertise,createtable);
+		})
 
-	// 筛选功能	参见 base.js
-	filterTable("adqueryterm",queryTable.advertise);
-	filterTable("materielqueryterm",queryTable.materiel);	
+		$("[href='#materiel']").click(function() {
+			showLoading(1);
+			createform(queryForm.materiel,createtable);
+		})
 
-	// 导出功能  参见 base.js
-	exportCSV("adqueryterm",queryTable.advertise);
-	exportCSV("materielqueryterm",queryTable.materiel);
+		// 筛选功能	参见 base.js
+		filterTable("adqueryterm",queryTable.advertise);
+		filterTable("materielqueryterm",queryTable.materiel);	
 
-	// 点击表格中“点击量”，弹出模态框显示详情。 参见 base.js 中 clickModal() 函数 
-	clickModal("advertise", queryNum.advertise);
-	clickModal("materiel", queryNum.materiel);
+		// 导出功能  参见 base.js
+		exportCSV("adqueryterm",queryTable.advertise);
+		exportCSV("materielqueryterm",queryTable.materiel);
 
-	$("#ViewDate").on("hidden.bs.modal", function() {
-		$(this).removeData("bs.modal");
-	});
+		// 点击表格中“点击量”，弹出模态框显示详情。 参见 base.js 中 clickModal() 函数 
+		clickModal("advertise", queryNum.advertise);
+		clickModal("materiel", queryNum.materiel);
 
-	
-
+		$("#ViewDate").on("hidden.bs.modal", function() {
+			$(this).removeData("bs.modal");
+		});
+	} else {
+		window.location.href = 'login.html';
+	}
 
 });
 </script>
